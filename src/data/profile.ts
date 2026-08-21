@@ -25,7 +25,7 @@ export const profile: Profile = {
   country: 'Indonesia',
   university: 'Universitas Islam Negeri Sultan Syarif Kasim Riau',
   major: 'Information Systems',
-  domain: 'https://mhmdhabibrafi.github.io/web-portofolio',
+  domain: 'https://mhmdhabibrafi.me',
   summary:
     'I build web applications, backend services, APIs, and operational systems with a focus on reliability, usability, and maintainable implementation.',
   email: 'mhmdhabibrafi@gmail.com',

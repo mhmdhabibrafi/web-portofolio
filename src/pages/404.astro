@@ -1,14 +1,12 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Icon from '@/components/Icon.astro';
-import { profile } from '@/data/profile';
-import { withBase } from '@/utils/paths';
 
 const notFoundSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebPage',
   name: 'Page not found',
-  url: `${profile.domain}/404.html`,
+  url: 'https://mhmdhabibrafi.me/404.html',
 };
 ---
 
@@ -19,8 +17,8 @@ const notFoundSchema = {
       <h1>This page is outside the system.</h1>
       <p>The address may have changed or the page may no longer be available. Continue from the portfolio home page or explore the project case studies.</p>
       <div class="button-row">
-        <a class="button button-primary" href={withBase('/')}><Icon name="arrow_back" size={18} /> Back Home</a>
-        <a class="button button-secondary" href={withBase('/projects/')}>View Projects <Icon name="arrow_forward" size={18} /></a>
+        <a class="button button-primary" href="/"><Icon name="arrow_back" size={18} /> Back Home</a>
+        <a class="button button-secondary" href="/projects/">View Projects <Icon name="arrow_forward" size={18} /></a>
       </div>
     </div>
   </section>

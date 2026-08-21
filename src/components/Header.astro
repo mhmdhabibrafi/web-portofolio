@@ -7,7 +7,6 @@ import Icon from './Icon.astro';
 import BrandIcon from './BrandIcon.astro';
 import LanguageSwitcher from './LanguageSwitcher.astro';
 import { ui, type Locale } from '@/i18n/config';
-import { withBase, withoutBase } from '@/utils/paths';
 
 interface Props { locale?: Locale }
 
@@ -15,14 +14,14 @@ const { locale = 'en' } = Astro.props;
 const copy = ui[locale];
 const localizedNavigation = locale === 'en' ? navigation : navigationId;
 
-const pathname = withoutBase(Astro.url.pathname);
+const pathname = Astro.url.pathname;
 const isActive = (href: string) =>
   href === '/' ? pathname === '/' : pathname === href || pathname.startsWith(href);
 ---
 
 <header class="site-header" data-site-header>
   <div class="site-container header-inner">
-    <a class="brand" href={withBase(locale === 'en' ? '/' : '/id/')}>
+    <a class="brand" href={locale === 'en' ? '/' : '/id/'}>
       <span class="brand-mark coding-mark" aria-hidden="true">&lt;/&gt;</span>
       <span class="brand-name">{profile.name}</span>
       <span class="sr-only">{copy.navigation.home}</span>
@@ -30,7 +29,7 @@ const isActive = (href: string) =>
 
     <nav class="desktop-nav" aria-label={copy.header.primaryNav}>
       {localizedNavigation.map((item) => (
-        <a class:list={['nav-link', { active: isActive(item.href) }]} href={withBase(item.href)} aria-current={isActive(item.href) ? 'page' : undefined}>
+        <a class:list={['nav-link', { active: isActive(item.href) }]} href={item.href} aria-current={isActive(item.href) ? 'page' : undefined}>
           {item.label}
         </a>
       ))}
@@ -58,7 +57,7 @@ const isActive = (href: string) =>
   <nav class="mobile-nav" id="mobile-navigation" data-mobile-nav aria-label={copy.header.mobileNav} hidden>
     <div class="site-container mobile-nav-inner">
       {localizedNavigation.map((item) => (
-        <a class:list={['mobile-nav-link', { active: isActive(item.href) }]} href={withBase(item.href)} aria-current={isActive(item.href) ? 'page' : undefined}>
+        <a class:list={['mobile-nav-link', { active: isActive(item.href) }]} href={item.href} aria-current={isActive(item.href) ? 'page' : undefined}>
           {item.label}
         </a>
       ))}

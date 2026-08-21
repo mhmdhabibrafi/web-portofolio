@@ -4,7 +4,6 @@ import Footer from '@/components/Footer.astro';
 import Header from '@/components/Header.astro';
 import SEO from '@/components/SEO.astro';
 import { alternateLocale, localizedPath, localeMeta, type Locale } from '@/i18n/config';
-import { withBase, withoutBase } from '@/utils/paths';
 
 interface Props {
   title: string;
@@ -17,11 +16,10 @@ interface Props {
 }
 
 const { title, description, image, type, noindex, structuredData, locale = 'en' } = Astro.props;
-const site = Astro.site ?? new URL('https://mhmdhabibrafi.github.io');
-const pathname = withoutBase(Astro.url.pathname);
-const canonical = new URL(withBase(pathname), site).toString();
-const alternateUrl = noindex ? undefined : new URL(withBase(localizedPath(pathname, alternateLocale(locale))), site).toString();
-const xDefaultUrl = noindex ? undefined : new URL(withBase(localizedPath(pathname, 'en')), site).toString();
+const site = Astro.site ?? new URL('https://mhmdhabibrafi.me');
+const canonical = new URL(Astro.url.pathname, site).toString();
+const alternateUrl = noindex ? undefined : new URL(localizedPath(Astro.url.pathname, alternateLocale(locale)), site).toString();
+const xDefaultUrl = noindex ? undefined : new URL(localizedPath(Astro.url.pathname, 'en'), site).toString();
 ---
 
 <!doctype html>
@@ -33,8 +31,8 @@ const xDefaultUrl = noindex ? undefined : new URL(withBase(localizedPath(pathnam
     <meta name="color-scheme" content="dark light" />
     <meta name="theme-color" content="#080b12" media="(prefers-color-scheme: dark)" />
     <meta name="theme-color" content="#f7f8fb" media="(prefers-color-scheme: light)" />
-    <link rel="icon" type="image/svg+xml" href={withBase('/favicon.svg')} />
-    <link rel="manifest" href={withBase('/site.webmanifest')} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="manifest" href="/site.webmanifest" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Sora:wght@500;600;700&display=swap" />

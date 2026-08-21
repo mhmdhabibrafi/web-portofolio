@@ -1,7 +1,6 @@
 ---
 import { alternateLocale, localizedPath, localeMeta, type Locale } from '@/i18n/config';
 import Icon from './Icon.astro';
-import { withBase, withoutBase } from '@/utils/paths';
 
 interface Props {
   locale: Locale;
@@ -9,7 +8,7 @@ interface Props {
 
 const { locale } = Astro.props;
 const targetLocale = alternateLocale(locale);
-const href = withBase(localizedPath(withoutBase(Astro.url.pathname), targetLocale));
+const href = localizedPath(Astro.url.pathname, targetLocale);
 const label = locale === 'en' ? 'Beralih ke Bahasa Indonesia' : 'Switch to English';
 ---
 

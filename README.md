@@ -1,6 +1,6 @@
 # Muhammad Habib Rafi — Portfolio
 
-A production-oriented bilingual personal portfolio for Muhammad Habib Rafi, Full Stack Web Developer in Pekanbaru, Indonesia. The site is static, content-driven, accessible, and deployed as a GitHub Pages project site at [mhmdhabibrafi.github.io/web-portofolio](https://mhmdhabibrafi.github.io/web-portofolio/).
+A production-oriented bilingual personal portfolio for Muhammad Habib Rafi, Full Stack Web Developer in Pekanbaru, Indonesia. The site is static, content-driven, accessible, and prepared for deployment to GitHub Pages at [mhmdhabibrafi.me](https://mhmdhabibrafi.me).
 
 ## Tech stack
 
@@ -112,18 +112,18 @@ npm run check:seo
 
 The generated `dist/` directory is deployable as a static website and should not be committed.
 
-## GitHub Pages deployment
+## GitHub Pages and custom domain
 
 The workflow in `.github/workflows/deploy.yml` validates, builds, audits, uploads, and deploys the site on pushes to `main` or manual dispatch. Set the repository Pages source to **GitHub Actions**.
 
-Astro uses the `/web-portofolio` base path required by GitHub project sites. See [DEPLOYMENT.md](./DEPLOYMENT.md) for activation, verification, and troubleshooting steps.
+`public/CNAME` contains `mhmdhabibrafi.me`, and Astro uses that same origin without a repository base path. See [DEPLOYMENT.md](./DEPLOYMENT.md) for DNS, HTTPS, Search Console, and troubleshooting steps.
 
 ## Google Search Console
 
-After the GitHub Pages deployment is live:
+After the domain is live:
 
-1. Add a URL-prefix property for `https://mhmdhabibrafi.github.io/web-portofolio/`.
-2. Complete the verification method supplied by Google.
-3. Submit `https://mhmdhabibrafi.github.io/web-portofolio/sitemap-index.xml`.
+1. Add a Domain property for `mhmdhabibrafi.me`.
+2. Complete the DNS TXT verification supplied by Google.
+3. Submit `https://mhmdhabibrafi.me/sitemap-index.xml`.
 4. Request indexing for the homepage and principal project pages.
 5. Monitor Page Indexing, Core Web Vitals, and Search Performance.

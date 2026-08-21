@@ -15,7 +15,6 @@ import rai1366 from '@/assets/rai-dashboard-1366.webp';
 import sadarFinance640 from '@/assets/sadar-finance-dashboard-640.webp';
 import sadarFinance1200 from '@/assets/sadar-finance-dashboard-1200.webp';
 import sadarFinance1366 from '@/assets/sadar-finance-dashboard-1366.webp';
-import { withBase } from '@/utils/paths';
 
 interface ProjectMediaSet {
   sources: Array<{ image: ImageMetadata; width: number }>;
@@ -99,7 +98,7 @@ const srcset = media?.sources.map(({ image, width }) => `${image.src} ${width}w`
   />
 ) : fallbackSrc ? (
   <img
-    src={withBase(fallbackSrc)}
+    src={fallbackSrc}
     {alt}
     width="1600"
     height="900"

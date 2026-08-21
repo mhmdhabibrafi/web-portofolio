@@ -14,7 +14,6 @@ import { leadershipExperiences, professionalExperiences } from '@/data/experienc
 import { publications } from '@/data/publications';
 import { education } from '@/data/education';
 import { developmentCapabilities, skillGroups } from '@/data/skills';
-import { withBase } from '@/utils/paths';
 
 const projects = (await getCollection('projects'))
   .filter((project) => project.data.featured)
@@ -92,7 +91,7 @@ const profilePageSchema = {
       <div class="summary-copy">
         <p>I work across frontend experiences, backend services, REST APIs, relational databases, and deployment workflows to build complete web systems.</p>
         <p>Alongside software development, I study Information Systems and write technical documentation that makes implementation and operational knowledge easier to maintain.</p>
-        <a class="text-link" href={withBase('/about/')}>More about my work <Icon name="arrow_forward" size={18} /></a>
+        <a class="text-link" href="/about/">More about my work <Icon name="arrow_forward" size={18} /></a>
       </div>
     </div>
   </section>
@@ -103,7 +102,7 @@ const profilePageSchema = {
       <div class="projects-grid">
         {projects.map((project, index) => <ProjectCard project={project} featured={index === 0} eager={index === 0} />)}
       </div>
-      <div class="section-action"><a class="button button-secondary" href={withBase('/projects/')}>Explore all projects <Icon name="arrow_forward" size={18} /></a></div>
+      <div class="section-action"><a class="button button-secondary" href="/projects/">Explore all projects <Icon name="arrow_forward" size={18} /></a></div>
     </div>
   </section>
 
@@ -111,7 +110,7 @@ const profilePageSchema = {
     <div class="site-container">
       <SectionHeading eyebrow="Experience" title="Learning and building in practical contexts." description="Experience shaped by a full-stack learning path, collaborative capstone delivery, and internal system development during an internship." />
       <ExperienceTimeline experiences={featuredExperiences} compact />
-      <div class="section-action"><a class="text-link" href={withBase('/experience/')}>View full experience <Icon name="arrow_forward" size={18} /></a></div>
+      <div class="section-action"><a class="text-link" href="/experience/">View full experience <Icon name="arrow_forward" size={18} /></a></div>
     </div>
   </section>
 
@@ -160,7 +159,7 @@ const profilePageSchema = {
         <p class="eyebrow">Contact</p>
         <h2 id="contact-cta-title">Let’s build something useful.</h2>
         <p>If you are hiring, exploring a software project, or looking for a development collaborator, you can reach me through my professional profiles.</p>
-        <div class="button-row"><a class="button button-primary" href={withBase('/contact/')}>Contact details <Icon name="arrow_forward" size={19} /></a><a class="button button-secondary" href={socials.linkedin} target="_blank" rel="noopener noreferrer">Connect on LinkedIn</a></div>
+        <div class="button-row"><a class="button button-primary" href="/contact/">Contact details <Icon name="arrow_forward" size={19} /></a><a class="button button-secondary" href={socials.linkedin} target="_blank" rel="noopener noreferrer">Connect on LinkedIn</a></div>
       </div>
     </div>
   </section>

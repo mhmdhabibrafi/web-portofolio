@@ -2,7 +2,6 @@
 import type { Experience } from '@/data/experience';
 import { ui, type Locale } from '@/i18n/config';
 import Icon from './Icon.astro';
-import { withBase } from '@/utils/paths';
 
 interface Props {
   experiences: Experience[];
@@ -47,7 +46,7 @@ const credentialLabel = locale === 'en' ? 'Credentials and recognition' : 'Krede
           </div>
         )}
         {experience.projectSlug && (
-          <a class="text-link" href={withBase(`${prefix}/projects/${experience.projectSlug}/`)}>{copy.related} <Icon name="arrow_outward" size={17} /></a>
+          <a class="text-link" href={`${prefix}/projects/${experience.projectSlug}/`}>{copy.related} <Icon name="arrow_outward" size={17} /></a>
         )}
       </div>
     </article>

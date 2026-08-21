@@ -2,7 +2,6 @@ import { access, readFile, readdir } from 'node:fs/promises';
 import { extname, join, relative } from 'node:path';
 
 const distDirectory = join(process.cwd(), 'dist');
-const basePath = '/web-portofolio';
 const failures = [];
 const seenTitles = new Map();
 const seenCanonicals = new Map();
@@ -48,11 +47,11 @@ for (const file of htmlFiles) {
   const checks = [
     [/<title>[^<]+<\/title>/iu, 'title'],
     [/<meta\s+name="description"\s+content="[^"]+"/iu, 'meta description'],
-    [/<link\s+rel="canonical"\s+href="https:\/\/mhmdhabibrafi\.github\.io\/web-portofolio\/[^"]*"/iu, 'absolute canonical'],
+    [/<link\s+rel="canonical"\s+href="https:\/\/mhmdhabibrafi\.me\/[^"]*"/iu, 'absolute canonical'],
     [/<h1(?:\s[^>]*)?>[\s\S]*?<\/h1>/iu, 'H1'],
     [/<meta\s+property="og:title"\s+content="[^"]+"/iu, 'Open Graph title'],
     [/<meta\s+property="og:description"\s+content="[^"]+"/iu, 'Open Graph description'],
-    [/<meta\s+property="og:image"\s+content="https:\/\/mhmdhabibrafi\.github\.io\/web-portofolio\/og\/[^"]+\.png"/iu, 'Open Graph image'],
+    [/<meta\s+property="og:image"\s+content="https:\/\/mhmdhabibrafi\.me\/og\/[^"]+\.png"/iu, 'Open Graph image'],
     [/<meta\s+name="robots"\s+content="[^"]+"/iu, 'robots metadata'],
     [/<script\s+type="application\/ld\+json">[\s\S]*?<\/script>/iu, 'JSON-LD'],
     [/<html\s+lang="(?:en|id)"/iu, 'supported HTML language'],
@@ -67,7 +66,7 @@ for (const file of htmlFiles) {
 
   if (page !== '404.html') {
     for (const language of ['en', 'id', 'x-default']) {
-      const alternatePattern = new RegExp(`<link\\s+rel="alternate"\\s+hreflang="${language}"\\s+href="https:\\/\\/mhmdhabibrafi\\.github\\.io\\/web-portofolio\\/[^"]*"`, 'iu');
+      const alternatePattern = new RegExp(`<link\\s+rel="alternate"\\s+hreflang="${language}"\\s+href="https:\\/\\/mhmdhabibrafi\\.me\\/[^"]*"`, 'iu');
       if (!alternatePattern.test(html)) failures.push(`${page}: missing ${language} hreflang alternate`);
     }
   }
@@ -102,27 +101,22 @@ for (const file of htmlFiles) {
 
   const internalLinks = [...html.matchAll(/\shref="(\/[^"#?]*)/giu)].map((match) => match[1]);
   for (const href of internalLinks) {
-    if (!href || href.startsWith(`${basePath}/_astro/`)) continue;
-    if (href !== basePath && !href.startsWith(`${basePath}/`)) {
-      failures.push(`${page}: internal link is missing deployment base path: ${href}`);
-      continue;
-    }
-    const route = href === basePath ? '/' : href.slice(basePath.length);
-    const isPageLink = route === '/' || route.endsWith('/') || route.endsWith('.html');
-    if (isPageLink && !publicRoutes.has(route)) failures.push(`${page}: broken internal page link ${href}`);
+    if (!href || href.startsWith('/_astro/')) continue;
+    const isPageLink = href === '/' || href.endsWith('/') || href.endsWith('.html');
+    if (isPageLink && !publicRoutes.has(href)) failures.push(`${page}: broken internal page link ${href}`);
   }
 
-  const ogImage = html.match(/<meta\s+property="og:image"\s+content="https:\/\/mhmdhabibrafi\.github\.io(\/web-portofolio\/og\/[^"]+\.png)"/iu)?.[1];
+  const ogImage = html.match(/<meta\s+property="og:image"\s+content="https:\/\/mhmdhabibrafi\.me(\/og\/[^"]+\.png)"/iu)?.[1];
   if (ogImage) {
     try {
-      await access(join(distDirectory, ogImage.slice(basePath.length + 1)));
+      await access(join(distDirectory, ogImage.slice(1)));
     } catch {
       failures.push(`${page}: referenced Open Graph image does not exist: ${ogImage}`);
     }
   }
 }
 
-for (const requiredFile of ['robots.txt', 'site.webmanifest', 'sitemap-index.xml']) {
+for (const requiredFile of ['CNAME', 'robots.txt', 'sitemap-index.xml']) {
   try {
     await access(join(distDirectory, requiredFile));
   } catch {

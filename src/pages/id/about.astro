@@ -4,7 +4,6 @@ import SectionHeading from '@/components/SectionHeading.astro';
 import Icon from '@/components/Icon.astro';
 import { profileId } from '@/data/profile';
 import { educationId } from '@/data/education';
-import { withBase } from '@/utils/paths';
 
 const workAreas = [
   ['Pengembangan Aplikasi Web', 'Membangun antarmuka dan alur aplikasi web yang lengkap berdasarkan kebutuhan nyata.'],
@@ -28,7 +27,7 @@ const schema = { '@context': 'https://schema.org', '@type': 'AboutPage', name: `
       <p>Bekerja pada frontend dan backend membantu saya memahami bagaimana keputusan antarmuka, aturan bisnis, autentikasi, model data, integrasi, dan deployment saling memengaruhi. Saya berusaha menjaga lapisan tersebut tetap mudah dipahami dan dipelihara.</p>
       <p>Studi Sistem Informasi memberikan pandangan lebih luas tentang hubungan perangkat lunak, manusia, data, dan proses operasional. Penulisan teknis melengkapi pekerjaan tersebut dengan mengubah pengetahuan implementasi menjadi dokumentasi yang dapat digunakan orang lain.</p>
       <p class="hero-location"><Icon name="location_on" size={18} filled /> {profileId.location}</p>
-      <div class="button-row"><a class="button button-primary" href={withBase('/id/projects/')}>Lihat studi kasus proyek <Icon name="arrow_forward" size={18} /></a><a class="button button-secondary" href={withBase('/id/experience/')}>Lihat pengalaman</a></div>
+      <div class="button-row"><a class="button button-primary" href="/id/projects/">Lihat studi kasus proyek <Icon name="arrow_forward" size={18} /></a><a class="button button-secondary" href="/id/experience/">Lihat pengalaman</a></div>
     </div>
   </div></section>
   <section class="page-section section-surface" aria-labelledby="work-title"><div class="site-container">

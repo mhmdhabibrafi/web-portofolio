@@ -8,7 +8,7 @@ const pages = [
   { file: 'about.png', eyebrow: 'ABOUT', title: 'Building across the full stack', subtitle: 'Muhammad Habib Rafi · Full Stack Web Developer' },
   { file: 'projects.png', eyebrow: 'PROJECTS', title: 'Software built for real workflows', subtitle: 'Muhammad Habib Rafi · Full Stack Web Developer' },
   { file: 'experience.png', eyebrow: 'EXPERIENCE', title: 'Development, leadership & research', subtitle: 'Muhammad Habib Rafi · Pekanbaru, Indonesia' },
-  { file: 'contact.png', eyebrow: 'CONTACT', title: "Let's build something useful", subtitle: 'Muhammad Habib Rafi · GitHub Pages' },
+  { file: 'contact.png', eyebrow: 'CONTACT', title: "Let's build something useful", subtitle: 'Muhammad Habib Rafi · mhmdhabibrafi.me' },
   { file: 'sadar-finance.png', eyebrow: 'CAPSTONE PROJECT', title: 'SADAR Finance', subtitle: 'Muhammad Habib Rafi · Full Stack Web Developer' },
   { file: 'bungsu-gym-management-system.png', eyebrow: 'CLIENT PROJECT', title: 'Bungsu Gym Management System', subtitle: 'Muhammad Habib Rafi · Full Stack Web Developer' },
   { file: 'ascit.png', eyebrow: 'INTERNSHIP PROJECT', title: 'ASCIT', subtitle: 'Asset Care Information Technology' },
@@ -18,7 +18,7 @@ const pages = [
   { file: 'id-about.png', eyebrow: 'TENTANG', title: 'Membangun di seluruh stack', subtitle: 'Muhammad Habib Rafi · Full Stack Web Developer' },
   { file: 'id-projects.png', eyebrow: 'PROYEK', title: 'Perangkat lunak untuk alur nyata', subtitle: 'Muhammad Habib Rafi · Full Stack Web Developer' },
   { file: 'id-experience.png', eyebrow: 'PENGALAMAN', title: 'Pengembangan, kepemimpinan & riset', subtitle: 'Muhammad Habib Rafi · Pekanbaru, Indonesia' },
-  { file: 'id-contact.png', eyebrow: 'KONTAK', title: 'Mari membangun sesuatu yang berguna', subtitle: 'Muhammad Habib Rafi · GitHub Pages' },
+  { file: 'id-contact.png', eyebrow: 'KONTAK', title: 'Mari membangun sesuatu yang berguna', subtitle: 'Muhammad Habib Rafi · mhmdhabibrafi.me' },
   { file: 'id-sadar-finance.png', eyebrow: 'PROYEK CAPSTONE', title: 'SADAR Finance', subtitle: 'Muhammad Habib Rafi · Full Stack Web Developer' },
   { file: 'id-bungsu-gym-management-system.png', eyebrow: 'PROYEK CLIENT', title: 'Bungsu Gym Management System', subtitle: 'Muhammad Habib Rafi · Full Stack Web Developer' },
   { file: 'id-ascit.png', eyebrow: 'PROYEK MAGANG', title: 'ASCIT', subtitle: 'Asset Care Information Technology' },
@@ -43,7 +43,7 @@ const createSvg = ({ eyebrow, title, subtitle }) => `
   <text x="108" y="315" fill="#f4f7fb" font-family="Arial, sans-serif" font-size="66" font-weight="700" letter-spacing="-2">${escapeXml(title)}</text>
   <text x="108" y="380" fill="#aab5c6" font-family="Arial, sans-serif" font-size="27">${escapeXml(subtitle)}</text>
   <rect x="108" y="446" width="112" height="5" rx="2.5" fill="#5fd5dd"/>
-  <text x="108" y="518" fill="#7f8a9b" font-family="Arial, sans-serif" font-size="20" letter-spacing="2">GITHUB.IO / WEB-PORTOFOLIO</text>
+  <text x="108" y="518" fill="#7f8a9b" font-family="Arial, sans-serif" font-size="20" letter-spacing="2">MHMDHABIBRAFI.ME</text>
   <text x="1015" y="518" fill="#9db7ff" font-family="monospace" font-size="25" font-weight="700">&lt;/&gt;</text>
 </svg>`;
 
