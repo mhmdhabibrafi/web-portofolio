@@ -6,6 +6,7 @@ import { socials } from '@/data/socials';
 import Icon from './Icon.astro';
 import BrandIcon from './BrandIcon.astro';
 import { ui, type Locale } from '@/i18n/config';
+import { withBase } from '@/utils/paths';
 
 interface Props { locale?: Locale }
 const { locale = 'en' } = Astro.props;
@@ -33,11 +34,11 @@ const profileImage = profileFile ? `/images/profile/${profileFile}` : null;
       </ul>
       <p class="hero-location"><Icon name="location_on" size={18} filled /> {localizedProfile.location}</p>
       <div class="button-row hero-actions">
-        <a class="button button-primary" href={`${prefix}/projects/`}>{copy.viewProjects} <Icon name="arrow_forward" size={19} /></a>
-        <a class="button button-secondary" href={`${prefix}/experience/`}>{copy.viewExperience}</a>
+        <a class="button button-primary" href={withBase(`${prefix}/projects/`)}>{copy.viewProjects} <Icon name="arrow_forward" size={19} /></a>
+        <a class="button button-secondary" href={withBase(`${prefix}/experience/`)}>{copy.viewExperience}</a>
         <a class="button button-icon-label" href={socials.linkedin} target="_blank" rel="noopener noreferrer"><BrandIcon name="linkedin" size={18} /> LinkedIn</a>
         <a class="button button-icon-label" href={socials.github} target="_blank" rel="noopener noreferrer"><BrandIcon name="github" size={18} /> GitHub</a>
-        {existsSync(resumePath) && <a class="button button-icon-label" href="/Muhammad-Habib-Rafi-CV.pdf" download><Icon name="download" size={19} /> {copy.resume}</a>}
+        {existsSync(resumePath) && <a class="button button-icon-label" href={withBase('/Muhammad-Habib-Rafi-CV.pdf')} download><Icon name="download" size={19} /> {copy.resume}</a>}
       </div>
     </div>
 

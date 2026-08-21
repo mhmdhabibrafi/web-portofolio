@@ -6,6 +6,8 @@ import Icon from '@/components/Icon.astro';
 import BrandIcon from '@/components/BrandIcon.astro';
 import ProjectMedia from '@/components/ProjectMedia.astro';
 import { ui, type Locale } from '@/i18n/config';
+import { profile } from '@/data/profile';
+import { withBase } from '@/utils/paths';
 
 type ProjectEntry = CollectionEntry<'projects'> | CollectionEntry<'projectsId'>;
 
@@ -18,7 +20,8 @@ const { project, locale = 'en' } = Astro.props;
 const { data } = project;
 const copy = ui[locale].project;
 const prefix = locale === 'en' ? '' : '/id';
-const projectUrl = `https://mhmdhabibrafi.me${prefix}/projects/${data.slug}/`;
+const siteOrigin = 'https://mhmdhabibrafi.github.io';
+const projectUrl = `${profile.domain}${prefix}/projects/${data.slug}/`;
 const breadcrumbItems = [
   { label: copy.breadcrumbsHome, href: locale === 'en' ? '/' : '/id/' },
   { label: copy.breadcrumbsProjects, href: `${prefix}/projects/` },
@@ -31,7 +34,7 @@ const breadcrumbSchema = {
     '@type': 'ListItem',
     position: index + 1,
     name: item.label,
-    ...(item.href ? { item: new URL(item.href, 'https://mhmdhabibrafi.me').toString() } : {}),
+    ...(item.href ? { item: new URL(withBase(item.href), siteOrigin).toString() } : {}),
   })),
 };
 const projectSchema = {
@@ -47,7 +50,7 @@ const projectSchema = {
   author: {
     '@type': 'Person',
     name: 'Muhammad Habib Rafi',
-    url: 'https://mhmdhabibrafi.me',
+    url: profile.domain,
   },
   creator: {
     '@type': 'Person',
@@ -169,8 +172,8 @@ const projectSchema = {
         )}
 
         <nav class="project-end-nav" aria-label="Project navigation">
-          <a class="text-link" href={`${prefix}/projects/`}><Icon name="arrow_back" size={18} /> {copy.allProjects}</a>
-          <a class="text-link" href={`${prefix}/contact/`}>{copy.conversation} <Icon name="arrow_outward" size={18} /></a>
+          <a class="text-link" href={withBase(`${prefix}/projects/`)}><Icon name="arrow_back" size={18} /> {copy.allProjects}</a>
+          <a class="text-link" href={withBase(`${prefix}/contact/`)}>{copy.conversation} <Icon name="arrow_outward" size={18} /></a>
         </nav>
       </div>
     </div>

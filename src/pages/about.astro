@@ -4,6 +4,7 @@ import SectionHeading from '@/components/SectionHeading.astro';
 import Icon from '@/components/Icon.astro';
 import { profile } from '@/data/profile';
 import { education } from '@/data/education';
+import { withBase } from '@/utils/paths';
 
 const workAreas = [
   ['Web Application Development', 'Build complete web interfaces and application workflows around concrete requirements.'],
@@ -47,7 +48,7 @@ const aboutSchema = {
         <p>Working across frontend and backend helps me see how interface decisions, business rules, authentication, data models, integrations, and deployment affect one another. I aim to keep those layers understandable and maintainable.</p>
         <p>My Information Systems studies provide a broader view of how software, people, data, and operational processes fit together. Technical writing complements that work by turning implementation knowledge into documentation others can use.</p>
         <p class="hero-location"><Icon name="location_on" size={18} filled /> {profile.location}</p>
-        <div class="button-row"><a class="button button-primary" href="/projects/">View project case studies <Icon name="arrow_forward" size={18} /></a><a class="button button-secondary" href="/experience/">View experience</a></div>
+        <div class="button-row"><a class="button button-primary" href={withBase('/projects/')}>View project case studies <Icon name="arrow_forward" size={18} /></a><a class="button button-secondary" href={withBase('/experience/')}>View experience</a></div>
       </div>
     </div>
   </section>

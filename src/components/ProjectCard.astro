@@ -3,6 +3,7 @@ import type { CollectionEntry } from 'astro:content';
 import { ui, type Locale } from '@/i18n/config';
 import Icon from './Icon.astro';
 import ProjectMedia from './ProjectMedia.astro';
+import { withBase } from '@/utils/paths';
 
 type ProjectEntry = CollectionEntry<'projects'> | CollectionEntry<'projectsId'>;
 
@@ -38,7 +39,7 @@ const prefix = locale === 'en' ? '' : '/id';
       <span class="project-type">{data.category}</span>
       <span>{data.role}</span>
     </div>
-    <h3><a class="card-link" href={`${prefix}/projects/${data.slug}/`}>{data.title}</a></h3>
+    <h3><a class="card-link" href={withBase(`${prefix}/projects/${data.slug}/`)}>{data.title}</a></h3>
     {data.expandedName && <p class="project-expanded">{data.expandedName}</p>}
     <p>{data.shortDescription}</p>
     {data.technologies.length > 0 && (

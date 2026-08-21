@@ -4,6 +4,7 @@ import { socials } from '@/data/socials';
 import Icon from './Icon.astro';
 import BrandIcon from './BrandIcon.astro';
 import { ui, type Locale } from '@/i18n/config';
+import { withBase } from '@/utils/paths';
 
 interface Props { locale?: Locale }
 const { locale = 'en' } = Astro.props;
@@ -16,14 +17,14 @@ const year = new Date().getFullYear();
 <footer class="site-footer">
   <div class="site-container footer-grid">
     <div>
-      <a class="footer-name" href={locale === 'en' ? '/' : '/id/'}>{profile.name}</a>
+      <a class="footer-name" href={withBase(locale === 'en' ? '/' : '/id/')}>{profile.name}</a>
       <p>{profile.title}</p>
       <p class="footer-built">{copy.footer.built}</p>
     </div>
     <nav class="footer-links" aria-label="Footer navigation">
-      <a href={`${prefix}/projects/`}>{copy.navigation.projects}</a>
-      <a href={`${prefix}/experience/`}>{copy.navigation.experience}</a>
-      <a href={`${prefix}/contact/`}>{copy.navigation.contact}</a>
+      <a href={withBase(`${prefix}/projects/`)}>{copy.navigation.projects}</a>
+      <a href={withBase(`${prefix}/experience/`)}>{copy.navigation.experience}</a>
+      <a href={withBase(`${prefix}/contact/`)}>{copy.navigation.contact}</a>
     </nav>
     <div class="footer-socials">
       <a href={socials.github} target="_blank" rel="noopener noreferrer"><BrandIcon name="github" size={17} /> GitHub <Icon name="arrow_outward" size={15} /></a>

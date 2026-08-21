@@ -3,7 +3,8 @@ import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
-  site: 'https://mhmdhabibrafi.me',
+  site: 'https://mhmdhabibrafi.github.io',
+  base: '/web-portofolio',
   output: 'static',
   trailingSlash: 'always',
   build: {

@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://mhmdhabibrafi.me/sitemap-index.xml
+Sitemap: https://mhmdhabibrafi.github.io/web-portofolio/sitemap-index.xml

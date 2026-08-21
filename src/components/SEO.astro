@@ -12,6 +12,8 @@ interface Props {
   xDefaultUrl?: string;
 }
 
+import { withBase } from '@/utils/paths';
+
 const {
   title,
   description,
@@ -25,8 +27,8 @@ const {
   xDefaultUrl,
 } = Astro.props;
 
-const site = Astro.site ?? new URL('https://mhmdhabibrafi.me');
-const imageUrl = new URL(image, site).toString();
+const site = Astro.site ?? new URL('https://mhmdhabibrafi.github.io');
+const imageUrl = new URL(withBase(image), site).toString();
 const schemas = structuredData ? (Array.isArray(structuredData) ? structuredData : [structuredData]) : [];
 const googleVerification = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION;
 ---
