@@ -1,0 +1,51 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { ui, type Locale } from '@/i18n/config';
+import Icon from './Icon.astro';
+import ProjectMedia from './ProjectMedia.astro';
+
+type ProjectEntry = CollectionEntry<'projects'> | CollectionEntry<'projectsId'>;
+
+interface Props {
+  project: ProjectEntry;
+  featured?: boolean;
+  eager?: boolean;
+  locale?: Locale;
+}
+
+const { project, featured = false, eager = false, locale = 'en' } = Astro.props;
+const { data } = project;
+const copy = ui[locale].projectCard;
+const prefix = locale === 'en' ? '' : '/id';
+---
+
+<article class:list={['project-card', { 'project-card-featured': featured }]}>
+  <div class="project-visual">
+    {data.coverImage ? (
+      <ProjectMedia
+        slug={data.slug}
+        fallbackSrc={data.coverImage}
+        alt={`${data.title} ${copy.identity}`}
+        sizes={featured ? '(max-width: 900px) 100vw, 58vw' : '(max-width: 680px) 100vw, 50vw'}
+        {eager}
+      />
+    ) : (
+      <div class="project-fallback" role="img" aria-label={`${data.title} ${copy.identity}`}><span>{data.title}</span></div>
+    )}
+  </div>
+  <div class="project-card-body">
+    <div class="project-card-meta">
+      <span class="project-type">{data.category}</span>
+      <span>{data.role}</span>
+    </div>
+    <h3><a class="card-link" href={`${prefix}/projects/${data.slug}/`}>{data.title}</a></h3>
+    {data.expandedName && <p class="project-expanded">{data.expandedName}</p>}
+    <p>{data.shortDescription}</p>
+    {data.technologies.length > 0 && (
+      <ul class="tech-list" aria-label={`${data.title} ${copy.technologies}`}>
+        {data.technologies.slice(0, featured ? 6 : 4).map((technology) => <li>{technology}</li>)}
+      </ul>
+    )}
+    <span class="project-card-cta">{copy.view} <Icon name="arrow_outward" size={18} /></span>
+  </div>
+</article>

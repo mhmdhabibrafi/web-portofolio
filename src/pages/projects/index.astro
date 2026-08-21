@@ -1,0 +1,35 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ProjectCard from '@/components/ProjectCard.astro';
+import { profile } from '@/data/profile';
+
+const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+const collectionSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: `Projects by ${profile.name}`,
+  url: `${profile.domain}/projects/`,
+  description: 'Selected software and information system case studies by Muhammad Habib Rafi.',
+  hasPart: projects.map((project) => ({
+    '@type': 'CreativeWork',
+    name: project.data.title,
+    url: `${profile.domain}/projects/${project.data.slug}/`,
+  })),
+};
+---
+
+<BaseLayout title="Projects | Muhammad Habib Rafi" description="Explore full-stack project case studies by Muhammad Habib Rafi across finance, gym operations, IT asset care, and information systems." image="/og/projects.png" structuredData={collectionSchema}>
+  <header class="page-hero">
+    <div class="site-container page-hero-inner">
+      <p class="eyebrow">Projects</p>
+      <h1>Software built around real problems and workflows.</h1>
+      <p>Case studies covering full-stack development across capstone collaboration, active client work, internship delivery, and information system projects.</p>
+    </div>
+  </header>
+  <section class="page-section" aria-label="Project case studies">
+    <div class="site-container projects-grid">
+      {projects.map((project, index) => <ProjectCard project={project} featured={index === 0} eager={index === 0} />)}
+    </div>
+  </section>
+</BaseLayout>

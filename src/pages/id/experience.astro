@@ -1,0 +1,41 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ExperienceTimeline from '@/components/ExperienceTimeline.astro';
+import SectionHeading from '@/components/SectionHeading.astro';
+import PublicationCard from '@/components/PublicationCard.astro';
+import CredentialGallery from '@/components/CredentialGallery.astro';
+import Icon from '@/components/Icon.astro';
+import { leadershipExperiencesId, learningExperiencesId, professionalExperiencesId } from '@/data/experience';
+import { educationId } from '@/data/education';
+import { profileId } from '@/data/profile';
+import { publicationsId } from '@/data/publications';
+
+const publication = publicationsId[0];
+const profileSchema = { '@context': 'https://schema.org', '@type': 'ProfilePage', name: `Pengalaman — ${profileId.name}`, url: `${profileId.domain}/id/experience/`, inLanguage: 'id', mainEntity: { '@type': 'Person', name: profileId.name, jobTitle: profileId.title, affiliation: { '@type': 'EducationalOrganization', name: profileId.university } } };
+const publicationSchema = publication ? { '@context': 'https://schema.org', '@type': 'ScholarlyArticle', headline: publication.title, url: publication.url, sameAs: `https://doi.org/${publication.doi}`, datePublished: '2026-06-25', pagination: publication.pages, inLanguage: 'id', author: publication.authors.map((name) => ({ '@type': 'Person', name })), isPartOf: { '@type': 'Periodical', name: publication.journal, issn: '2454-6186' }, keywords: publication.keywords.join(', ') } : undefined;
+---
+
+<BaseLayout locale="id" title="Pengalaman | Muhammad Habib Rafi" description="Pengalaman profesional, magang, kepemimpinan, riset, dan pembelajaran full-stack Muhammad Habib Rafi, beserta publikasi peer-reviewed." image="/og/id-experience.png" type="profile" structuredData={publicationSchema ? [profileSchema, publicationSchema] : profileSchema}>
+  <header class="page-hero"><div class="site-container page-hero-inner"><p class="eyebrow">Pengalaman</p><h1>Pengalaman pengembangan, kepemimpinan, dan riset.</h1><p>Pengalaman profesional, magang, organisasi, riset, dan pembelajaran yang telah dikonfirmasi, dipisahkan berdasarkan konteks agar setiap kontribusi tetap jelas.</p></div></header>
+  <section class="page-section section-surface experience-group" aria-labelledby="professional-title"><div class="site-container">
+    <SectionHeading eyebrow="Pengalaman profesional dan magang" title="Membangun dan mendukung sistem operasional." titleId="professional-title" description="Pengembangan website, operasional TI, troubleshooting, dan delivery sistem internal pada konteks universitas serta layanan kesehatan." />
+    <ExperienceTimeline experiences={professionalExperiencesId} locale="id" />
+  </div></section>
+  <section class="page-section experience-group" aria-labelledby="leadership-title"><div class="site-container">
+    <SectionHeading eyebrow="Kepemimpinan dan riset" title="Berkontribusi di luar delivery aplikasi." titleId="leadership-title" description="Kepemimpinan program teknologi mahasiswa, kolaborasi riset, dan pengalaman advokasi mahasiswa sebelumnya." />
+    <ExperienceTimeline experiences={leadershipExperiencesId} locale="id" />
+  </div></section>
+  <section class="page-section section-surface experience-group" aria-labelledby="learning-title"><div class="site-container">
+    <SectionHeading eyebrow="Program pembelajaran pilihan" title="Pembelajaran full-stack, backend, cloud, dan AI yang terstruktur." titleId="learning-title" description="Program intensif ditampilkan sebagai pengalaman pembelajaran, bukan pekerjaan formal." />
+    <ExperienceTimeline experiences={learningExperiencesId} locale="id" />
+    <CredentialGallery locale="id" />
+  </div></section>
+  {publication && <section class="page-section experience-group" aria-labelledby="research-publication-title"><div class="site-container">
+    <SectionHeading eyebrow="Publikasi" title="Riset peer-reviewed dalam bidang sistem informasi." titleId="research-publication-title" description="Karya terpublikasi tentang algoritma rekomendasi, filter bubble, dan perilaku pencarian informasi pada Generasi Z di Indonesia." />
+    <PublicationCard {publication} locale="id" />
+  </div></section>}
+  <section class="page-section section-surface" aria-labelledby="experience-education-title"><div class="site-container">
+    <SectionHeading eyebrow="Pendidikan" title="Fondasi akademik" description="Studi Sistem Informasi yang mendukung pemahaman lebih luas tentang perangkat lunak, data, dan alur organisasi." />
+    <article class="education-card"><div class="education-icon"><Icon name="school" size={24} filled /></div><div><h3 id="experience-education-title">{educationId.institution}</h3><p>{educationId.program} · {educationId.location}</p></div><span class="education-status">{educationId.status}</span></article>
+  </div></section>
+</BaseLayout>

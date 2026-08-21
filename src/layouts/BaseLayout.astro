@@ -1,0 +1,85 @@
+---
+import '@/styles/global.css';
+import Footer from '@/components/Footer.astro';
+import Header from '@/components/Header.astro';
+import SEO from '@/components/SEO.astro';
+import { alternateLocale, localizedPath, localeMeta, type Locale } from '@/i18n/config';
+
+interface Props {
+  title: string;
+  description: string;
+  image?: string;
+  type?: 'website' | 'article' | 'profile';
+  noindex?: boolean;
+  structuredData?: Record<string, unknown> | Record<string, unknown>[];
+  locale?: Locale;
+}
+
+const { title, description, image, type, noindex, structuredData, locale = 'en' } = Astro.props;
+const site = Astro.site ?? new URL('https://mhmdhabibrafi.me');
+const canonical = new URL(Astro.url.pathname, site).toString();
+const alternateUrl = noindex ? undefined : new URL(localizedPath(Astro.url.pathname, alternateLocale(locale)), site).toString();
+const xDefaultUrl = noindex ? undefined : new URL(localizedPath(Astro.url.pathname, 'en'), site).toString();
+---
+
+<!doctype html>
+<html lang={localeMeta[locale].lang} data-theme-mode="system">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="color-scheme" content="dark light" />
+    <meta name="theme-color" content="#080b12" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#f7f8fb" media="(prefers-color-scheme: light)" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Sora:wght@500;600;700&display=swap" />
+    <SEO {title} {description} {canonical} {image} {type} {noindex} {structuredData} {locale} {alternateUrl} {xDefaultUrl} />
+    <script is:inline>
+      (() => {
+        try {
+          const saved = localStorage.getItem('theme');
+          const mode = saved === 'light' || saved === 'dark' ? saved : 'system';
+          const resolved = mode === 'system'
+            ? (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+            : mode;
+          document.documentElement.dataset.themeMode = mode;
+          document.documentElement.dataset.theme = resolved;
+        } catch {
+          document.documentElement.dataset.themeMode = 'system';
+        }
+      })();
+    </script>
+  </head>
+  <body id="top">
+    <a class="skip-link" href="#main-content">{locale === 'en' ? 'Skip to main content' : 'Lewati ke konten utama'}</a>
+    <Header {locale} />
+    <main id="main-content">
+      <slot />
+    </main>
+    <Footer {locale} />
+    <script>
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const revealTargets = document.querySelectorAll<HTMLElement>('.page-hero, .project-hero, .section-heading, .summary-grid, .project-card, .timeline-item, .skill-card, .publication-card, .education-card, .contact-card, .what-i-do-card, .case-section, .credential-card, .cta-panel');
+
+      if (!reducedMotion && 'IntersectionObserver' in window) {
+        revealTargets.forEach((element) => element.classList.add('reveal-ready'));
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add('is-revealed');
+            observer.unobserve(entry.target);
+          });
+        }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+        revealTargets.forEach((element) => observer.observe(element));
+      }
+
+      const siteHeader = document.querySelector<HTMLElement>('[data-site-header]');
+      const syncHeader = () => siteHeader?.classList.toggle('is-scrolled', window.scrollY > 18);
+      syncHeader();
+      window.addEventListener('scroll', syncHeader, { passive: true });
+    </script>
+  </body>
+</html>

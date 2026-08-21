@@ -1,0 +1,25 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Icon from '@/components/Icon.astro';
+
+const notFoundSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: 'Page not found',
+  url: 'https://mhmdhabibrafi.me/404.html',
+};
+---
+
+<BaseLayout title="Page Not Found | Muhammad Habib Rafi" description="The requested page could not be found. Return to Muhammad Habib Rafi's portfolio or browse the project case studies." image="/og/default.png" noindex structuredData={notFoundSchema}>
+  <section class="not-found page-section">
+    <div class="site-container not-found-inner">
+      <p class="error-code" aria-hidden="true">404</p>
+      <h1>This page is outside the system.</h1>
+      <p>The address may have changed or the page may no longer be available. Continue from the portfolio home page or explore the project case studies.</p>
+      <div class="button-row">
+        <a class="button button-primary" href="/"><Icon name="arrow_back" size={18} /> Back Home</a>
+        <a class="button button-secondary" href="/projects/">View Projects <Icon name="arrow_forward" size={18} /></a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

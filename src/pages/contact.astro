@@ -1,0 +1,61 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Icon from '@/components/Icon.astro';
+import BrandIcon from '@/components/BrandIcon.astro';
+import { profile } from '@/data/profile';
+import { socials } from '@/data/socials';
+
+const contactSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ContactPage',
+  name: `Contact ${profile.name}`,
+  url: `${profile.domain}/contact/`,
+  mainEntity: {
+    '@type': 'Person',
+    name: profile.name,
+    url: profile.domain,
+    email: profile.email,
+    sameAs: [socials.linkedin, socials.github, socials.instagram],
+  },
+};
+---
+
+<BaseLayout title="Contact | Muhammad Habib Rafi" description="Connect with Muhammad Habib Rafi, a Full Stack Web Developer in Pekanbaru, through email, LinkedIn, GitHub, or Instagram." image="/og/contact.png" structuredData={contactSchema}>
+  <section class="page-section" aria-labelledby="contact-title">
+    <div class="site-container contact-grid">
+      <div class="contact-intro">
+        <p class="eyebrow">Contact</p>
+        <h1 id="contact-title">Let’s build something useful.</h1>
+        <p>For development opportunities, project conversations, or professional collaboration, connect with me through the profiles listed here.</p>
+      </div>
+      <div class="contact-options">
+        <a class="contact-card" href={socials.linkedin} target="_blank" rel="noopener noreferrer">
+          <div class="contact-card-icon brand-linkedin"><BrandIcon name="linkedin" size={21} /></div>
+          <div><span>Professional network</span><strong>LinkedIn</strong></div>
+          <Icon name="arrow_outward" size={19} />
+        </a>
+        <a class="contact-card" href={socials.github} target="_blank" rel="noopener noreferrer">
+          <div class="contact-card-icon brand-github"><BrandIcon name="github" size={21} /></div>
+          <div><span>Code and projects</span><strong>GitHub</strong></div>
+          <Icon name="arrow_outward" size={19} />
+        </a>
+        <a class="contact-card" href={socials.instagram} target="_blank" rel="noopener noreferrer">
+          <div class="contact-card-icon brand-instagram"><BrandIcon name="instagram" size={21} /></div>
+          <div><span>Updates and professional presence</span><strong>Instagram</strong></div>
+          <Icon name="arrow_outward" size={19} />
+        </a>
+        {profile.email && (
+          <a class="contact-card" href={`mailto:${profile.email}`}>
+            <div class="contact-card-icon"><Icon name="mail" size={22} /></div>
+            <div><span>Email</span><strong>{profile.email}</strong></div>
+            <Icon name="arrow_outward" size={19} />
+          </a>
+        )}
+        <div class="contact-card">
+          <div class="contact-card-icon"><Icon name="location_on" size={22} filled /></div>
+          <div><span>Location</span><strong>{profile.location}</strong></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,61 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  canonical: string;
+  image?: string;
+  type?: 'website' | 'article' | 'profile';
+  noindex?: boolean;
+  structuredData?: Record<string, unknown> | Record<string, unknown>[];
+  locale?: 'en' | 'id';
+  alternateUrl?: string;
+  xDefaultUrl?: string;
+}
+
+const {
+  title,
+  description,
+  canonical,
+  image = '/og/default.png',
+  type = 'website',
+  noindex = false,
+  structuredData,
+  locale = 'en',
+  alternateUrl,
+  xDefaultUrl,
+} = Astro.props;
+
+const site = Astro.site ?? new URL('https://mhmdhabibrafi.me');
+const imageUrl = new URL(image, site).toString();
+const schemas = structuredData ? (Array.isArray(structuredData) ? structuredData : [structuredData]) : [];
+const googleVerification = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION;
+---
+
+<title>{title}</title>
+<meta name="description" content={description} />
+<meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large'} />
+<link rel="canonical" href={canonical} />
+{alternateUrl && <link rel="alternate" hreflang={locale === 'en' ? 'id' : 'en'} href={alternateUrl} />}
+{xDefaultUrl && <link rel="alternate" hreflang="x-default" href={xDefaultUrl} />}
+<link rel="alternate" hreflang={locale} href={canonical} />
+
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:type" content={type} />
+<meta property="og:url" content={canonical} />
+<meta property="og:image" content={imageUrl} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content={`${title} — Muhammad Habib Rafi`} />
+<meta property="og:site_name" content="Muhammad Habib Rafi" />
+<meta property="og:locale" content={locale === 'en' ? 'en_US' : 'id_ID'} />
+<meta property="og:locale:alternate" content={locale === 'en' ? 'id_ID' : 'en_US'} />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={imageUrl} />
+<meta name="twitter:image:alt" content={`${title} — Muhammad Habib Rafi`} />
+
+{googleVerification && <meta name="google-site-verification" content={googleVerification} />}
+{schemas.map((schema) => <script is:inline type="application/ld+json" set:html={JSON.stringify(schema)} />)}

@@ -1,0 +1,118 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Hero from '@/components/Hero.astro';
+import SectionHeading from '@/components/SectionHeading.astro';
+import ProjectCard from '@/components/ProjectCard.astro';
+import ExperienceTimeline from '@/components/ExperienceTimeline.astro';
+import SkillGroup from '@/components/SkillGroup.astro';
+import PublicationCard from '@/components/PublicationCard.astro';
+import Icon from '@/components/Icon.astro';
+import { profileId } from '@/data/profile';
+import { socials } from '@/data/socials';
+import { leadershipExperiencesId, professionalExperiencesId } from '@/data/experience';
+import { publicationsId } from '@/data/publications';
+import { educationId } from '@/data/education';
+import { developmentCapabilitiesId, skillGroupsId } from '@/data/skills';
+
+const projects = (await getCollection('projectsId'))
+  .filter((project) => project.data.featured)
+  .sort((a, b) => a.data.order - b.data.order);
+const featuredExperiences = [professionalExperiencesId[0], professionalExperiencesId[1], leadershipExperiencesId[0]].filter((item) => item !== undefined);
+const featuredPublication = publicationsId[0];
+
+const approach = [
+  { title: 'Memahami masalah', description: 'Memulai dari pengguna, alur kerja, dan batasan operasional yang harus dilayani sistem.' },
+  { title: 'Merancang sistem', description: 'Memetakan tanggung jawab, hubungan data, antarmuka, dan batas delivery yang praktis.' },
+  { title: 'Membangun untuk dipelihara', description: 'Menjaga implementasi tetap terbaca, bertipe bila sesuai, dan siap menghadapi perubahan.' },
+  { title: 'Mengintegrasikan dan menguji', description: 'Menghubungkan lapisan aplikasi dan memverifikasi alur yang diandalkan pengguna.' },
+  { title: 'Melakukan deployment dan iterasi', description: 'Menyiapkan jalur delivery yang andal, lalu memperbaiki sistem berdasarkan kebutuhan nyata.' },
+];
+
+const schemas = [
+  {
+    '@context': 'https://schema.org', '@type': 'Person', '@id': `${profileId.domain}/#person`, name: profileId.name,
+    url: profileId.domain, jobTitle: profileId.title, description: profileId.summary, email: profileId.email, sameAs: [socials.linkedin, socials.github, socials.instagram],
+    address: { '@type': 'PostalAddress', addressLocality: profileId.city, addressRegion: profileId.region, addressCountry: profileId.country },
+    affiliation: { '@type': 'EducationalOrganization', name: profileId.university },
+  },
+  {
+    '@context': 'https://schema.org', '@type': 'ProfilePage', url: `${profileId.domain}/id/`, name: `${profileId.name} — ${profileId.title}`,
+    inLanguage: 'id', mainEntity: { '@id': `${profileId.domain}/#person` },
+  },
+];
+---
+
+<BaseLayout locale="id" title="Muhammad Habib Rafi | Full Stack Web Developer Indonesia" description="Portofolio Muhammad Habib Rafi, Full Stack Web Developer di Pekanbaru yang membangun aplikasi web, API backend, dan sistem operasional." image="/og/id-default.png" type="profile" structuredData={schemas}>
+  <Hero locale="id" />
+
+  <section class="page-section section-surface" aria-labelledby="summary-title">
+    <div class="site-container summary-grid">
+      <div><p class="eyebrow">Ringkasan profesional</p><h2 id="summary-title">Dari logika aplikasi hingga antarmuka yang berguna.</h2></div>
+      <div class="summary-copy">
+        <p>Saya bekerja pada pengalaman frontend, layanan backend, REST API, basis data relasional, dan alur deployment untuk membangun sistem web yang lengkap.</p>
+        <p>Selain mengembangkan perangkat lunak, saya mempelajari Sistem Informasi dan menulis dokumentasi teknis agar pengetahuan implementasi serta operasional lebih mudah dipelihara.</p>
+        <a class="text-link" href="/id/about/">Selengkapnya tentang pekerjaan saya <Icon name="arrow_forward" size={18} /></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="page-section" aria-labelledby="projects-title">
+    <div class="site-container">
+      <SectionHeading eyebrow="Proyek pilihan" title="Sistem yang dibangun untuk alur kerja nyata." description="Pilihan proyek capstone, client, magang, dan perangkat lunak pada bidang keuangan, operasional, perawatan aset, serta sistem informasi." />
+      <div class="projects-grid">{projects.map((project, index) => <ProjectCard project={project} featured={index === 0} eager={index === 0} locale="id" />)}</div>
+      <div class="section-action"><a class="button button-secondary" href="/id/projects/">Jelajahi semua proyek <Icon name="arrow_forward" size={18} /></a></div>
+    </div>
+  </section>
+
+  <section class="page-section section-surface" aria-labelledby="experience-title">
+    <div class="site-container">
+      <SectionHeading eyebrow="Pengalaman" title="Belajar dan membangun dalam konteks praktis." description="Pengalaman dari learning path full-stack, kolaborasi capstone, dan pengembangan sistem internal selama kerja praktik." />
+      <ExperienceTimeline experiences={featuredExperiences} compact locale="id" />
+      <div class="section-action"><a class="text-link" href="/id/experience/">Lihat pengalaman lengkap <Icon name="arrow_forward" size={18} /></a></div>
+    </div>
+  </section>
+
+  <section class="page-section" aria-labelledby="publication-title">
+    <div class="site-container">
+      <SectionHeading eyebrow="Riset dan penulisan" title="Riset terpublikasi tentang perilaku informasi digital." titleId="publication-title" description="Karya peer-reviewed yang menghubungkan sistem informasi, algoritma rekomendasi, dan cara Generasi Z mencari informasi secara daring." />
+      {featuredPublication && <PublicationCard publication={featuredPublication} locale="id" compact />}
+    </div>
+  </section>
+
+  <section class="page-section section-surface" aria-labelledby="capabilities-title">
+    <div class="site-container">
+      <SectionHeading eyebrow="Kapabilitas teknis" title="Implementasi full-stack tanpa rating yang dibuat-buat." description="Teknologi dan area pengembangan yang digunakan dalam pekerjaan proyek yang didokumentasikan." />
+      <div class="skills-grid">{skillGroupsId.map((group, index) => <SkillGroup {group} {index} locale="id" />)}</div>
+      <ul class="capability-list" aria-label="Kapabilitas pengembangan">{developmentCapabilitiesId.map((capability) => <li>{capability}</li>)}</ul>
+    </div>
+  </section>
+
+  <section class="page-section" aria-labelledby="approach-title">
+    <div class="site-container">
+      <SectionHeading eyebrow="Pendekatan profesional" title="Alur yang jelas dari masalah hingga sistem yang dipelihara." description="Cara kerja praktis yang menjaga kebutuhan produk, kualitas implementasi, dan delivery tetap terhubung." />
+      <div class="approach-grid">{approach.map((step, index) => <article class="approach-step"><span>{String(index + 1).padStart(2, '0')}</span><h3>{step.title}</h3><p>{step.description}</p></article>)}</div>
+    </div>
+  </section>
+
+  <section class="page-section" aria-labelledby="education-title">
+    <div class="site-container">
+      <SectionHeading eyebrow="Pendidikan dan pembelajaran" title="Sistem Informasi sebagai fondasi pekerjaan perangkat lunak." description="Menggabungkan konteks akademik dengan pengembangan full-stack langsung pada proyek kolaboratif dan operasional." />
+      <article class="education-card">
+        <div class="education-icon"><Icon name="school" size={24} filled /></div>
+        <div><h3 id="education-title">{educationId.institution}</h3><p>{educationId.program} · {educationId.location}</p></div>
+        <span class="education-status">{educationId.status}</span>
+      </article>
+    </div>
+  </section>
+
+  <section class="page-section" aria-labelledby="contact-cta-title">
+    <div class="site-container"><div class="cta-panel">
+      <p class="eyebrow">Kontak</p><h2 id="contact-cta-title">Mari membangun sesuatu yang berguna.</h2>
+      <p>Jika Anda sedang merekrut, mengeksplorasi proyek perangkat lunak, atau mencari kolaborator pengembangan, hubungi saya melalui profil profesional berikut.</p>
+      <div class="button-row"><a class="button button-primary" href="/id/contact/">Lihat kontak <Icon name="arrow_forward" size={19} /></a><a class="button button-secondary" href={socials.linkedin} target="_blank" rel="noopener noreferrer">Terhubung di LinkedIn</a></div>
+    </div></div>
+  </section>
+</BaseLayout>
+
+<style>.section-action { margin-top: 2rem; }</style>

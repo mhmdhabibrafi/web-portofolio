@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">Bungsu Gym Management System project graphic</title><desc id="desc">Abstract operational system identity for Bungsu Gym.</desc>
+  <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#15231f"/><stop offset="1" stop-color="#090f13"/></linearGradient></defs>
+  <rect width="1600" height="900" fill="url(#g)"/><circle cx="250" cy="760" r="360" fill="#5fd5dd" opacity=".07"/>
+  <g fill="none" stroke="#2b4948"><rect x="150" y="150" width="1300" height="600" rx="38"/><path d="M150 275h1300"/></g>
+  <g transform="translate(240 350)"><text fill="#76ddd8" font-family="Arial,sans-serif" font-size="26" font-weight="700" letter-spacing="5">CLIENT PROJECT</text><text y="100" fill="#f4f7fb" font-family="Arial,sans-serif" font-size="76" font-weight="700">Bungsu Gym</text><text y="162" fill="#aab5c6" font-family="Arial,sans-serif" font-size="29">Management &amp; operational system</text><path d="M0 235h260" stroke="#5fd5dd" stroke-width="5"/></g>
+  <g transform="translate(1050 400)" fill="none" stroke="#76ddd8" stroke-width="20" stroke-linecap="round"><path d="M0 70h250M45 20v100M205 20v100"/><path d="M-15 40v60M265 40v60" stroke-width="28"/></g>
+</svg>

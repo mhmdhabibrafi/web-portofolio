@@ -1,0 +1,109 @@
+---
+import type { ImageMetadata } from 'astro';
+import ascit640 from '@/assets/ascit-dashboard-640.webp';
+import ascit1200 from '@/assets/ascit-dashboard-1200.webp';
+import ascit1619 from '@/assets/ascit-dashboard-1619.webp';
+import bungsuGym640 from '@/assets/bungsu-gym-dashboard-640.webp';
+import bungsuGym1200 from '@/assets/bungsu-gym-dashboard-1200.webp';
+import bungsuGym1672 from '@/assets/bungsu-gym-dashboard-1672.webp';
+import rentak640 from '@/assets/rentak-dashboard-640.webp';
+import rentak1200 from '@/assets/rentak-dashboard-1200.webp';
+import rentak1366 from '@/assets/rentak-dashboard-1366.webp';
+import rai640 from '@/assets/rai-dashboard-640.webp';
+import rai1200 from '@/assets/rai-dashboard-1200.webp';
+import rai1366 from '@/assets/rai-dashboard-1366.webp';
+import sadarFinance640 from '@/assets/sadar-finance-dashboard-640.webp';
+import sadarFinance1200 from '@/assets/sadar-finance-dashboard-1200.webp';
+import sadarFinance1366 from '@/assets/sadar-finance-dashboard-1366.webp';
+
+interface ProjectMediaSet {
+  sources: Array<{ image: ImageMetadata; width: number }>;
+  width: number;
+  height: number;
+}
+
+interface Props {
+  slug: string;
+  fallbackSrc?: string;
+  alt: string;
+  sizes: string;
+  eager?: boolean;
+}
+
+const projectMedia: Record<string, ProjectMediaSet> = {
+  ascit: {
+    sources: [
+      { image: ascit640, width: 640 },
+      { image: ascit1200, width: 1200 },
+      { image: ascit1619, width: 1619 },
+    ],
+    width: 1619,
+    height: 971,
+  },
+  'bungsu-gym-management-system': {
+    sources: [
+      { image: bungsuGym640, width: 640 },
+      { image: bungsuGym1200, width: 1200 },
+      { image: bungsuGym1672, width: 1672 },
+    ],
+    width: 1672,
+    height: 941,
+  },
+  'sadar-finance': {
+    sources: [
+      { image: sadarFinance640, width: 640 },
+      { image: sadarFinance1200, width: 1200 },
+      { image: sadarFinance1366, width: 1366 },
+    ],
+    width: 1366,
+    height: 768,
+  },
+  rai: {
+    sources: [
+      { image: rai640, width: 640 },
+      { image: rai1200, width: 1200 },
+      { image: rai1366, width: 1366 },
+    ],
+    width: 1366,
+    height: 768,
+  },
+  rentak: {
+    sources: [
+      { image: rentak640, width: 640 },
+      { image: rentak1200, width: 1200 },
+      { image: rentak1366, width: 1366 },
+    ],
+    width: 1366,
+    height: 768,
+  },
+};
+
+const { slug, fallbackSrc, alt, sizes, eager = false } = Astro.props;
+const media = projectMedia[slug];
+const largest = media?.sources.at(-1);
+const srcset = media?.sources.map(({ image, width }) => `${image.src} ${width}w`).join(', ');
+---
+
+{media && largest ? (
+  <img
+    src={largest.image.src}
+    srcset={srcset}
+    {sizes}
+    {alt}
+    width={media.width}
+    height={media.height}
+    loading={eager ? 'eager' : 'lazy'}
+    fetchpriority={eager ? 'high' : 'auto'}
+    decoding="async"
+  />
+) : fallbackSrc ? (
+  <img
+    src={fallbackSrc}
+    {alt}
+    width="1600"
+    height="900"
+    loading={eager ? 'eager' : 'lazy'}
+    fetchpriority={eager ? 'high' : 'auto'}
+    decoding="async"
+  />
+) : null}

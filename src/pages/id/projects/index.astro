@@ -1,0 +1,14 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ProjectCard from '@/components/ProjectCard.astro';
+import { profileId } from '@/data/profile';
+
+const projects = (await getCollection('projectsId')).sort((a, b) => a.data.order - b.data.order);
+const schema = { '@context': 'https://schema.org', '@type': 'CollectionPage', name: `Proyek ${profileId.name}`, url: `${profileId.domain}/id/projects/`, inLanguage: 'id', description: 'Studi kasus perangkat lunak dan sistem informasi pilihan oleh Muhammad Habib Rafi.', hasPart: projects.map((project) => ({ '@type': 'CreativeWork', name: project.data.title, url: `${profileId.domain}/id/projects/${project.data.slug}/` })) };
+---
+
+<BaseLayout locale="id" title="Proyek | Muhammad Habib Rafi" description="Jelajahi studi kasus proyek full-stack Muhammad Habib Rafi pada bidang keuangan, operasional gym, perawatan aset TI, dan sistem informasi." image="/og/id-projects.png" structuredData={schema}>
+  <header class="page-hero"><div class="site-container page-hero-inner"><p class="eyebrow">Proyek</p><h1>Perangkat lunak untuk masalah dan alur kerja nyata.</h1><p>Studi kasus pengembangan full-stack pada kolaborasi capstone, pekerjaan client aktif, kerja praktik, dan proyek sistem informasi.</p></div></header>
+  <section class="page-section" aria-label="Studi kasus proyek"><div class="site-container projects-grid">{projects.map((project, index) => <ProjectCard project={project} featured={index === 0} eager={index === 0} locale="id" />)}</div></section>
+</BaseLayout>

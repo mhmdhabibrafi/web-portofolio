@@ -1,0 +1,23 @@
+---
+import type { SkillGroup as SkillGroupType } from '@/data/skills';
+import Icon from './Icon.astro';
+
+interface Props {
+  group: SkillGroupType;
+  index: number;
+  locale?: 'en' | 'id';
+}
+
+const { group, index } = Astro.props;
+const icons = ['layers', 'server_person', 'database', 'code_blocks'];
+const icon = icons[index % icons.length] ?? 'layers';
+---
+
+<article class="skill-card">
+  <div class="skill-icon"><Icon name={icon} size={23} /></div>
+  <h3>{group.title}</h3>
+  <p>{group.description}</p>
+  <ul class="tech-list" aria-label={`${group.title} skills`}>
+    {group.skills.map((skill) => <li>{skill}</li>)}
+  </ul>
+</article>

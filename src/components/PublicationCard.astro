@@ -1,0 +1,37 @@
+---
+import type { Publication } from '@/data/publications';
+import type { Locale } from '@/i18n/config';
+import Icon from './Icon.astro';
+
+interface Props {
+  publication: Publication;
+  locale?: Locale;
+  compact?: boolean;
+}
+
+const { publication, locale = 'en', compact = false } = Astro.props;
+const labels = locale === 'en'
+  ? { publication: 'Peer-reviewed publication', authors: 'Authors', journal: 'Journal details', article: 'View publication', pdf: 'Read PDF' }
+  : { publication: 'Publikasi peer-reviewed', authors: 'Penulis', journal: 'Detail jurnal', article: 'Lihat publikasi', pdf: 'Baca PDF' };
+---
+
+<article class:list={['publication-card', { 'publication-card-compact': compact }]}>
+  <div class="publication-icon"><Icon name="book_2" size={23} /></div>
+  <div class="publication-content">
+    <p class="eyebrow">{labels.publication}</p>
+    <h3>{publication.title}</h3>
+    <p class="publication-journal">{publication.journal} · {publication.publishedDate}</p>
+    {!compact && <p>{publication.summary}</p>}
+    {!compact && (
+      <dl class="publication-details">
+        <div><dt>{labels.authors}</dt><dd>{publication.authors.join(', ')}</dd></div>
+        <div><dt>{labels.journal}</dt><dd>Vol. {publication.volume}, Issue {publication.issue}, pp. {publication.pages} · DOI: {publication.doi}</dd></div>
+      </dl>
+    )}
+    {!compact && <ul class="tech-list" aria-label={locale === 'en' ? 'Publication keywords' : 'Kata kunci publikasi'}>{publication.keywords.map((keyword) => <li>{keyword}</li>)}</ul>}
+    <div class="publication-actions">
+      <a class="text-link" href={publication.url} target="_blank" rel="noopener noreferrer">{labels.article} <Icon name="arrow_outward" size={17} /></a>
+      {!compact && <a class="text-link" href={publication.pdfUrl} target="_blank" rel="noopener noreferrer"><Icon name="download" size={17} /> {labels.pdf}</a>}
+    </div>
+  </div>
+</article>

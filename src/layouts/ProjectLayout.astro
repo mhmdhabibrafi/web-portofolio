@@ -1,0 +1,178 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import BaseLayout from './BaseLayout.astro';
+import Breadcrumbs from '@/components/Breadcrumbs.astro';
+import Icon from '@/components/Icon.astro';
+import BrandIcon from '@/components/BrandIcon.astro';
+import ProjectMedia from '@/components/ProjectMedia.astro';
+import { ui, type Locale } from '@/i18n/config';
+
+type ProjectEntry = CollectionEntry<'projects'> | CollectionEntry<'projectsId'>;
+
+interface Props {
+  project: ProjectEntry;
+  locale?: Locale;
+}
+
+const { project, locale = 'en' } = Astro.props;
+const { data } = project;
+const copy = ui[locale].project;
+const prefix = locale === 'en' ? '' : '/id';
+const projectUrl = `https://mhmdhabibrafi.me${prefix}/projects/${data.slug}/`;
+const breadcrumbItems = [
+  { label: copy.breadcrumbsHome, href: locale === 'en' ? '/' : '/id/' },
+  { label: copy.breadcrumbsProjects, href: `${prefix}/projects/` },
+  { label: data.title },
+];
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: breadcrumbItems.map((item, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    name: item.label,
+    ...(item.href ? { item: new URL(item.href, 'https://mhmdhabibrafi.me').toString() } : {}),
+  })),
+};
+const projectSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareSourceCode',
+  name: data.title,
+  alternateName: data.expandedName,
+  description: data.longDescription,
+  inLanguage: locale,
+  url: projectUrl,
+  codeRepository: data.github,
+  programmingLanguage: data.technologies.length > 0 ? data.technologies : undefined,
+  author: {
+    '@type': 'Person',
+    name: 'Muhammad Habib Rafi',
+    url: 'https://mhmdhabibrafi.me',
+  },
+  creator: {
+    '@type': 'Person',
+    name: 'Muhammad Habib Rafi',
+  },
+};
+---
+
+<BaseLayout title={data.seoTitle} description={data.seoDescription} image={`/og/${locale === 'en' ? '' : 'id-'}${data.slug}.png`} type="article" structuredData={[projectSchema, breadcrumbSchema]} {locale}>
+  <article class="project-detail">
+    <header class="project-hero page-section">
+      <div class="site-container">
+        <Breadcrumbs items={breadcrumbItems} />
+        <div class="project-hero-grid">
+          <div class="project-hero-copy">
+            <div class="project-label-row">
+              <span class="project-type">{data.category}</span>
+              {data.status && data.status !== data.category && <span>{data.status}</span>}
+            </div>
+            <h1>{data.title}</h1>
+            {data.expandedName && <p class="project-subtitle">{data.expandedName}</p>}
+            <p class="project-lead">{data.longDescription}</p>
+            <div class="project-facts">
+              <div><span>{copy.role}</span><strong>{data.role}</strong></div>
+              {(data.period || data.year) && <div><span>{copy.period}</span><strong>{data.period ?? data.year}</strong></div>}
+              {(data.organization || data.client) && <div><span>{copy.context}</span><strong>{data.organization ?? data.client}</strong></div>}
+            </div>
+            {(data.github || data.liveUrl) && (
+              <div class="button-row">
+                {data.liveUrl && <a class="button button-primary" href={data.liveUrl} target="_blank" rel="noopener noreferrer">{copy.visit} <Icon name="open_in_new" size={18} /></a>}
+                {data.github && <a class="button button-secondary" href={data.github} target="_blank" rel="noopener noreferrer"><BrandIcon name="github" size={17} /> {copy.source}</a>}
+              </div>
+            )}
+          </div>
+          {data.coverImage && (
+            <div class="project-detail-visual">
+              <ProjectMedia
+                slug={data.slug}
+                fallbackSrc={data.coverImage}
+                alt={locale === 'en' ? `${data.title} system interface` : `Antarmuka sistem ${data.title}`}
+                sizes="(max-width: 900px) 100vw, 52vw"
+                eager
+              />
+            </div>
+          )}
+        </div>
+      </div>
+    </header>
+
+    <div class="site-container case-study-layout">
+      <aside class="case-study-nav" aria-label="Case study contents">
+        <p>{copy.caseStudy}</p>
+        <a href="#overview">{copy.overview}</a>
+        {data.problem && <a href="#problem">{copy.problem}</a>}
+        {data.solution && <a href="#solution">{copy.solution}</a>}
+        <a href="#role">{copy.myRole}</a>
+        {data.features.length > 0 && <a href="#capabilities">{copy.capabilities}</a>}
+        {data.architecture.length > 0 && <a href="#architecture">{copy.architecture}</a>}
+        {(data.challenges.length > 0 || data.solutions.length > 0) && <a href="#engineering">{copy.engineering}</a>}
+        {data.results.length > 0 && <a href="#outcome">{copy.outcome}</a>}
+      </aside>
+
+      <div class="case-study-content">
+        <section id="overview" class="case-section">
+          <p class="eyebrow">{copy.overviewEyebrow}</p>
+          <h2>{copy.overviewTitle}</h2>
+          <div class="prose"><slot /></div>
+          {data.context && <div class="context-note"><strong>{copy.projectContext}</strong><p>{data.context}</p></div>}
+        </section>
+
+        {data.problem && <section id="problem" class="case-section"><p class="eyebrow">{copy.problem}</p><h2>{copy.problemTitle}</h2><p>{data.problem}</p></section>}
+        {data.solution && <section id="solution" class="case-section"><p class="eyebrow">{copy.solution}</p><h2>{copy.solutionTitle}</h2><p>{data.solution}</p></section>}
+
+        <section id="role" class="case-section">
+          <p class="eyebrow">{copy.myRole}</p>
+          <h2>{data.role}</h2>
+          {data.contribution && <p>{data.contribution}</p>}
+          {data.responsibilities.length > 0 && <ul class="check-list case-list">{data.responsibilities.map((item) => <li>{item}</li>)}</ul>}
+        </section>
+
+        {data.features.length > 0 && (
+          <section id="capabilities" class="case-section">
+            <p class="eyebrow">{copy.capabilitiesEyebrow}</p>
+            <h2>{copy.capabilitiesTitle}</h2>
+            <ul class="capability-grid">{data.features.map((feature) => <li>{feature}</li>)}</ul>
+          </section>
+        )}
+
+        {(data.architecture.length > 0 || data.technologies.length > 0) && (
+          <section id="architecture" class="case-section">
+            <p class="eyebrow">{copy.architectureEyebrow}</p>
+            <h2>{copy.architectureTitle}</h2>
+            {data.architecture.length > 0 && <ul class="architecture-list">{data.architecture.map((item, index) => <li><span>{String(index + 1).padStart(2, '0')}</span><p>{item}</p></li>)}</ul>}
+            {data.technologies.length > 0 && <><h3 class="section-subheading">{copy.technologyStack}</h3><ul class="tech-list large">{data.technologies.map((technology) => <li>{technology}</li>)}</ul></>}
+          </section>
+        )}
+
+        {(data.challenges.length > 0 || data.solutions.length > 0 || data.implementation) && (
+          <section id="engineering" class="case-section">
+            <p class="eyebrow">{copy.engineering}</p>
+            <h2>{copy.engineeringTitle}</h2>
+            {data.implementation && <p>{data.implementation}</p>}
+            {(data.challenges.length > 0 || data.solutions.length > 0) && (
+              <div class="decision-grid">
+                {data.challenges.length > 0 && <div><h3>{copy.challenges}</h3><ul>{data.challenges.map((item) => <li>{item}</li>)}</ul></div>}
+                {data.solutions.length > 0 && <div><h3>{copy.response}</h3><ul>{data.solutions.map((item) => <li>{item}</li>)}</ul></div>}
+              </div>
+            )}
+          </section>
+        )}
+
+        {data.results.length > 0 && <section id="outcome" class="case-section"><p class="eyebrow">{copy.outcome}</p><h2>{copy.outcomeTitle}</h2><ul class="check-list case-list">{data.results.map((item) => <li>{item}</li>)}</ul></section>}
+
+        {data.gallery.length > 0 && (
+          <section class="case-section">
+            <p class="eyebrow">{copy.galleryEyebrow}</p><h2>{copy.galleryTitle}</h2>
+            <div class="project-gallery">{data.gallery.map((image) => <img src={image.src} alt={image.alt} width="1600" height="900" loading="lazy" decoding="async" />)}</div>
+          </section>
+        )}
+
+        <nav class="project-end-nav" aria-label="Project navigation">
+          <a class="text-link" href={`${prefix}/projects/`}><Icon name="arrow_back" size={18} /> {copy.allProjects}</a>
+          <a class="text-link" href={`${prefix}/contact/`}>{copy.conversation} <Icon name="arrow_outward" size={18} /></a>
+        </nav>
+      </div>
+    </div>
+  </article>
+</BaseLayout>

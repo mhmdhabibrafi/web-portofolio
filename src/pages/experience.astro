@@ -1,0 +1,95 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ExperienceTimeline from '@/components/ExperienceTimeline.astro';
+import SectionHeading from '@/components/SectionHeading.astro';
+import PublicationCard from '@/components/PublicationCard.astro';
+import CredentialGallery from '@/components/CredentialGallery.astro';
+import Icon from '@/components/Icon.astro';
+import { leadershipExperiences, learningExperiences, professionalExperiences } from '@/data/experience';
+import { education } from '@/data/education';
+import { profile } from '@/data/profile';
+import { publications } from '@/data/publications';
+
+const publication = publications[0];
+const experienceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfilePage',
+  name: `Experience — ${profile.name}`,
+  url: `${profile.domain}/experience/`,
+  mainEntity: {
+    '@type': 'Person',
+    name: profile.name,
+    jobTitle: profile.title,
+    affiliation: { '@type': 'EducationalOrganization', name: profile.university },
+  },
+};
+const publicationSchema = publication ? {
+  '@context': 'https://schema.org',
+  '@type': 'ScholarlyArticle',
+  headline: publication.title,
+  url: publication.url,
+  sameAs: `https://doi.org/${publication.doi}`,
+  datePublished: '2026-06-25',
+  pagination: publication.pages,
+  inLanguage: 'en',
+  author: publication.authors.map((name) => ({ '@type': 'Person', name })),
+  isPartOf: {
+    '@type': 'Periodical',
+    name: publication.journal,
+    issn: '2454-6186',
+  },
+  keywords: publication.keywords.join(', '),
+} : undefined;
+---
+
+<BaseLayout title="Experience | Muhammad Habib Rafi" description="Professional, internship, leadership, research, and full-stack learning experience of Muhammad Habib Rafi, plus a verified peer-reviewed publication." image="/og/experience.png" type="profile" structuredData={publicationSchema ? [experienceSchema, publicationSchema] : experienceSchema}>
+  <header class="page-hero">
+    <div class="site-container page-hero-inner">
+      <p class="eyebrow">Experience</p>
+      <h1>Development, leadership, and research experience.</h1>
+      <p>Confirmed professional, internship, organizational, research, and learning experience presented by context so each contribution remains clear.</p>
+    </div>
+  </header>
+
+  <section class="page-section section-surface experience-group" aria-labelledby="professional-title">
+    <div class="site-container">
+      <SectionHeading eyebrow="Professional and internship experience" title="Building and supporting operational systems." titleId="professional-title" description="Website development, IT operations, troubleshooting, and internal system delivery in university and healthcare contexts." />
+      <ExperienceTimeline experiences={professionalExperiences} />
+    </div>
+  </section>
+
+  <section class="page-section experience-group" aria-labelledby="leadership-title">
+    <div class="site-container">
+      <SectionHeading eyebrow="Leadership and research" title="Contributing beyond application delivery." titleId="leadership-title" description="Leadership in student technology programs, research collaboration, and prior student advocacy work." />
+      <ExperienceTimeline experiences={leadershipExperiences} />
+    </div>
+  </section>
+
+  <section class="page-section section-surface experience-group" aria-labelledby="learning-title">
+    <div class="site-container">
+      <SectionHeading eyebrow="Selected learning programs" title="Structured full-stack, backend, cloud, and AI learning." titleId="learning-title" description="Intensive programs are identified as learning experiences rather than formal employment." />
+      <ExperienceTimeline experiences={learningExperiences} />
+      <CredentialGallery />
+    </div>
+  </section>
+
+  {publication && (
+    <section class="page-section experience-group" aria-labelledby="research-publication-title">
+      <div class="site-container">
+        <SectionHeading eyebrow="Publication" title="Peer-reviewed research in information systems." titleId="research-publication-title" description="Published work examining recommendation algorithms, filter bubbles, and information-seeking behavior among Generation Z users in Indonesia." />
+        <PublicationCard {publication} />
+      </div>
+    </section>
+  )}
+
+  <section class="page-section section-surface" aria-labelledby="experience-education-title">
+    <div class="site-container">
+      <SectionHeading eyebrow="Education" title="Academic foundation" description="Information Systems study supporting a broader understanding of software, data, and organizational workflows." />
+      <article class="education-card">
+        <div class="education-icon"><Icon name="school" size={24} filled /></div>
+        <div><h3 id="experience-education-title">{education.institution}</h3><p>{education.program} · {education.location}</p></div>
+        <span class="education-status">{education.status}</span>
+      </article>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,17 @@
+{
+  "name": "Muhammad Habib Rafi Portfolio",
+  "short_name": "Portfolio",
+  "description": "Portfolio of Muhammad Habib Rafi, Full Stack Web Developer.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#080b12",
+  "theme_color": "#080b12",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

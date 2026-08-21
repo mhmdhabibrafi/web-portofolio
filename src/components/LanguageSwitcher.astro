@@ -1,0 +1,18 @@
+---
+import { alternateLocale, localizedPath, localeMeta, type Locale } from '@/i18n/config';
+import Icon from './Icon.astro';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const targetLocale = alternateLocale(locale);
+const href = localizedPath(Astro.url.pathname, targetLocale);
+const label = locale === 'en' ? 'Beralih ke Bahasa Indonesia' : 'Switch to English';
+---
+
+<a class="language-switcher" href={href} hreflang={targetLocale} lang={targetLocale} aria-label={label} title={label}>
+  <Icon name="language" size={18} />
+  <span>{localeMeta[targetLocale].label}</span>
+</a>

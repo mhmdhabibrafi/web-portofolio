@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">SADAR Finance project graphic</title><desc id="desc">Abstract financial dashboard identity for SADAR Finance.</desc>
+  <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#111a31"/><stop offset="1" stop-color="#09101d"/></linearGradient></defs>
+  <rect width="1600" height="900" fill="url(#g)"/><circle cx="1320" cy="140" r="300" fill="#759bff" opacity=".09"/>
+  <g fill="none" stroke="#34476c"><rect x="150" y="150" width="1300" height="600" rx="38"/><path d="M150 275h1300"/><circle cx="210" cy="212" r="9" fill="#759bff" stroke="none"/><circle cx="245" cy="212" r="9" fill="#5fd5dd" stroke="none" opacity=".7"/></g>
+  <g transform="translate(240 350)"><text fill="#9db7ff" font-family="Inter,Arial,sans-serif" font-size="26" font-weight="700" letter-spacing="5">CAPSTONE PROJECT</text><text y="100" fill="#f4f7fb" font-family="Arial,sans-serif" font-size="82" font-weight="700">SADAR Finance</text><text y="160" fill="#aab5c6" font-family="Arial,sans-serif" font-size="29">AI-powered financial assistant</text><path d="M0 235h260" stroke="#5fd5dd" stroke-width="5"/></g>
+  <g transform="translate(1000 365)" fill="none" stroke="#759bff" stroke-width="10" stroke-linecap="round"><path d="M0 180V80M80 180V20M160 180v-65M240 180V0"/><path d="M-20 180h290" stroke="#34476c" stroke-width="3"/></g>
+</svg>

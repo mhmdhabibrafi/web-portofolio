@@ -1,0 +1,170 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Hero from '@/components/Hero.astro';
+import SectionHeading from '@/components/SectionHeading.astro';
+import ProjectCard from '@/components/ProjectCard.astro';
+import ExperienceTimeline from '@/components/ExperienceTimeline.astro';
+import SkillGroup from '@/components/SkillGroup.astro';
+import PublicationCard from '@/components/PublicationCard.astro';
+import Icon from '@/components/Icon.astro';
+import { profile } from '@/data/profile';
+import { socials } from '@/data/socials';
+import { leadershipExperiences, professionalExperiences } from '@/data/experience';
+import { publications } from '@/data/publications';
+import { education } from '@/data/education';
+import { developmentCapabilities, skillGroups } from '@/data/skills';
+
+const projects = (await getCollection('projects'))
+  .filter((project) => project.data.featured)
+  .sort((a, b) => a.data.order - b.data.order);
+const featuredExperiences = [professionalExperiences[0], professionalExperiences[1], leadershipExperiences[0]].filter((item) => item !== undefined);
+const featuredPublication = publications[0];
+
+const approach = [
+  { title: 'Understand the problem', description: 'Start with the people, workflow, and operational constraint the system needs to serve.' },
+  { title: 'Design the system', description: 'Map responsibilities, data relationships, interfaces, and practical delivery boundaries.' },
+  { title: 'Build for maintenance', description: 'Keep implementation readable, typed where applicable, and structured for continued change.' },
+  { title: 'Integrate and test', description: 'Connect the application layers and verify the paths users rely on.' },
+  { title: 'Deploy and iterate', description: 'Prepare a dependable delivery path, then improve the system from real requirements.' },
+];
+
+const personSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  '@id': `${profile.domain}/#person`,
+  name: profile.name,
+  url: profile.domain,
+  jobTitle: profile.title,
+  description: profile.summary,
+  email: profile.email,
+  sameAs: [socials.linkedin, socials.github, socials.instagram],
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: profile.city,
+    addressRegion: profile.region,
+    addressCountry: profile.country,
+  },
+  affiliation: {
+    '@type': 'EducationalOrganization',
+    name: profile.university,
+  },
+  knowsAbout: ['Web Development', 'Backend Development', 'REST APIs', 'Laravel', 'React', 'Node.js', 'PostgreSQL', 'MySQL', 'Docker'],
+};
+
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  '@id': `${profile.domain}/#website`,
+  url: profile.domain,
+  name: `${profile.name} Portfolio`,
+  inLanguage: 'en',
+  publisher: { '@id': `${profile.domain}/#person` },
+};
+
+const profilePageSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfilePage',
+  '@id': `${profile.domain}/#profile-page`,
+  url: profile.domain,
+  name: `${profile.name} — ${profile.title}`,
+  mainEntity: { '@id': `${profile.domain}/#person` },
+  isPartOf: { '@id': `${profile.domain}/#website` },
+};
+---
+
+<BaseLayout
+  title="Muhammad Habib Rafi | Full Stack Web Developer"
+  description="Portfolio of Muhammad Habib Rafi, a Full Stack Web Developer in Pekanbaru building web applications, backend APIs, and operational systems."
+  image="/og/default.png"
+  type="profile"
+  structuredData={[personSchema, websiteSchema, profilePageSchema]}
+>
+  <Hero />
+
+  <section class="page-section section-surface" aria-labelledby="summary-title">
+    <div class="site-container summary-grid">
+      <div>
+        <p class="eyebrow">Professional summary</p>
+        <h2 id="summary-title">From application logic to useful interfaces.</h2>
+      </div>
+      <div class="summary-copy">
+        <p>I work across frontend experiences, backend services, REST APIs, relational databases, and deployment workflows to build complete web systems.</p>
+        <p>Alongside software development, I study Information Systems and write technical documentation that makes implementation and operational knowledge easier to maintain.</p>
+        <a class="text-link" href="/about/">More about my work <Icon name="arrow_forward" size={18} /></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="page-section" aria-labelledby="projects-title">
+    <div class="site-container">
+      <SectionHeading eyebrow="Selected projects" title="Systems built around real workflows." description="A selection of capstone, client, internship, and software projects covering finance, operations, asset care, and information systems." />
+      <div class="projects-grid">
+        {projects.map((project, index) => <ProjectCard project={project} featured={index === 0} eager={index === 0} />)}
+      </div>
+      <div class="section-action"><a class="button button-secondary" href="/projects/">Explore all projects <Icon name="arrow_forward" size={18} /></a></div>
+    </div>
+  </section>
+
+  <section class="page-section section-surface" aria-labelledby="experience-title">
+    <div class="site-container">
+      <SectionHeading eyebrow="Experience" title="Learning and building in practical contexts." description="Experience shaped by a full-stack learning path, collaborative capstone delivery, and internal system development during an internship." />
+      <ExperienceTimeline experiences={featuredExperiences} compact />
+      <div class="section-action"><a class="text-link" href="/experience/">View full experience <Icon name="arrow_forward" size={18} /></a></div>
+    </div>
+  </section>
+
+  <section class="page-section" aria-labelledby="publication-title">
+    <div class="site-container">
+      <SectionHeading eyebrow="Research and writing" title="Published research on digital information behavior." titleId="publication-title" description="Peer-reviewed work connecting information systems, recommendation algorithms, and how Generation Z finds information online." />
+      {featuredPublication && <PublicationCard publication={featuredPublication} compact />}
+    </div>
+  </section>
+
+  <section class="page-section section-surface" aria-labelledby="capabilities-title">
+    <div class="site-container">
+      <SectionHeading eyebrow="Technical capabilities" title="Full-stack implementation, without inflated ratings." description="Technologies and development areas used across the documented project work." />
+      <div class="skills-grid">
+        {skillGroups.map((group, index) => <SkillGroup {group} {index} />)}
+      </div>
+      <ul class="capability-list" aria-label="Development capabilities">
+        {developmentCapabilities.map((capability) => <li>{capability}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="page-section" aria-labelledby="approach-title">
+    <div class="site-container">
+      <SectionHeading eyebrow="Professional approach" title="A clear path from problem to maintained system." description="A practical way of working that keeps product needs, implementation quality, and delivery connected." />
+      <div class="approach-grid">
+        {approach.map((step, index) => <article class="approach-step"><span>{String(index + 1).padStart(2, '0')}</span><h3>{step.title}</h3><p>{step.description}</p></article>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="page-section" aria-labelledby="education-title">
+    <div class="site-container">
+      <SectionHeading eyebrow="Education and learning" title="Information Systems as a foundation for software work." description="Combining academic context with hands-on full-stack development across collaborative and operational projects." />
+      <article class="education-card">
+        <div class="education-icon"><Icon name="school" size={24} filled /></div>
+        <div><h3 id="education-title">{education.institution}</h3><p>{education.program} · {education.location}</p></div>
+        <span class="education-status">{education.status}</span>
+      </article>
+    </div>
+  </section>
+
+  <section class="page-section" aria-labelledby="contact-cta-title">
+    <div class="site-container">
+      <div class="cta-panel">
+        <p class="eyebrow">Contact</p>
+        <h2 id="contact-cta-title">Let’s build something useful.</h2>
+        <p>If you are hiring, exploring a software project, or looking for a development collaborator, you can reach me through my professional profiles.</p>
+        <div class="button-row"><a class="button button-primary" href="/contact/">Contact details <Icon name="arrow_forward" size={19} /></a><a class="button button-secondary" href={socials.linkedin} target="_blank" rel="noopener noreferrer">Connect on LinkedIn</a></div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .section-action { margin-top: 2rem; }
+</style>

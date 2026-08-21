@@ -1,0 +1,54 @@
+---
+import type { Experience } from '@/data/experience';
+import { ui, type Locale } from '@/i18n/config';
+import Icon from './Icon.astro';
+
+interface Props {
+  experiences: Experience[];
+  compact?: boolean;
+  locale?: Locale;
+}
+
+const { experiences, compact = false, locale = 'en' } = Astro.props;
+const copy = ui[locale].timeline;
+const prefix = locale === 'en' ? '' : '/id';
+const presentLabel = locale === 'en' ? 'Present' : 'Sekarang';
+const credentialLabel = locale === 'en' ? 'Credentials and recognition' : 'Kredensial dan pencapaian';
+---
+
+<div class:list={['timeline', { 'timeline-compact': compact }]}>
+  {experiences.map((experience) => (
+    <article class="timeline-item">
+      <div class="timeline-marker" aria-hidden="true"></div>
+      <div class="timeline-date">
+        {experience.startDate && <span>{experience.startDate}{experience.current ? ` — ${presentLabel}` : experience.endDate ? ` — ${experience.endDate}` : ''}</span>}
+        <span class="timeline-type">{experience.type}</span>
+      </div>
+      <div class="timeline-content">
+        <div class="timeline-organization-row">
+          <p class="timeline-organization">{experience.organization}</p>
+        </div>
+        <h3>{experience.role}</h3>
+        {experience.location && <p class="timeline-location"><Icon name="location_on" size={16} />{experience.location}</p>}
+        <p>{experience.description}</p>
+        {!compact && experience.responsibilities.length > 0 && (
+          <ul class="check-list">
+            {experience.responsibilities.map((responsibility) => <li>{responsibility}</li>)}
+          </ul>
+        )}
+        <ul class="tech-list" aria-label={`${experience.organization} ${copy.technologies}`}>
+          {experience.technologies.map((technology) => <li>{technology}</li>)}
+        </ul>
+        {!compact && experience.credentials && experience.credentials.length > 0 && (
+          <div class="experience-credentials">
+            <p><Icon name="workspace_premium" size={17} filled /> {credentialLabel}</p>
+            <ul>{experience.credentials.map((credential) => <li>{credential}</li>)}</ul>
+          </div>
+        )}
+        {experience.projectSlug && (
+          <a class="text-link" href={`${prefix}/projects/${experience.projectSlug}/`}>{copy.related} <Icon name="arrow_outward" size={17} /></a>
+        )}
+      </div>
+    </article>
+  ))}
+</div>

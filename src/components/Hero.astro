@@ -1,0 +1,58 @@
+---
+import { existsSync, readdirSync } from 'node:fs';
+import { resolve } from 'node:path';
+import { profile, profileId } from '@/data/profile';
+import { socials } from '@/data/socials';
+import Icon from './Icon.astro';
+import BrandIcon from './BrandIcon.astro';
+import { ui, type Locale } from '@/i18n/config';
+
+interface Props { locale?: Locale }
+const { locale = 'en' } = Astro.props;
+const localizedProfile = locale === 'en' ? profile : profileId;
+const copy = ui[locale].hero;
+const prefix = locale === 'en' ? '' : '/id';
+
+const publicDirectory = resolve(process.cwd(), 'public');
+const resumePath = resolve(publicDirectory, 'Muhammad-Habib-Rafi-CV.pdf');
+const profileDirectory = resolve(publicDirectory, 'images', 'profile');
+const profileFile = existsSync(profileDirectory)
+  ? readdirSync(profileDirectory).find((file) => /\.(avif|webp|png|jpe?g)$/i.test(file))
+  : undefined;
+const profileImage = profileFile ? `/images/profile/${profileFile}` : null;
+---
+
+<section class="hero page-section" aria-labelledby="hero-title">
+  <div class="site-container hero-grid">
+    <div class="hero-copy">
+      <p class="hero-kicker"><span aria-hidden="true"></span>{localizedProfile.title}</p>
+      <h1 id="hero-title">{localizedProfile.name}</h1>
+      <p class="hero-summary">{localizedProfile.summary}</p>
+      <ul class="hero-positions" aria-label="Professional positioning">
+        {localizedProfile.positions.map((position) => <li>{position}</li>)}
+      </ul>
+      <p class="hero-location"><Icon name="location_on" size={18} filled /> {localizedProfile.location}</p>
+      <div class="button-row hero-actions">
+        <a class="button button-primary" href={`${prefix}/projects/`}>{copy.viewProjects} <Icon name="arrow_forward" size={19} /></a>
+        <a class="button button-secondary" href={`${prefix}/experience/`}>{copy.viewExperience}</a>
+        <a class="button button-icon-label" href={socials.linkedin} target="_blank" rel="noopener noreferrer"><BrandIcon name="linkedin" size={18} /> LinkedIn</a>
+        <a class="button button-icon-label" href={socials.github} target="_blank" rel="noopener noreferrer"><BrandIcon name="github" size={18} /> GitHub</a>
+        {existsSync(resumePath) && <a class="button button-icon-label" href="/Muhammad-Habib-Rafi-CV.pdf" download><Icon name="download" size={19} /> {copy.resume}</a>}
+      </div>
+    </div>
+
+    <div class="hero-identity" aria-label="Muhammad Habib Rafi developer identity">
+      <div class="identity-frame">
+        {profileImage ? (
+          <img src={profileImage} alt={locale === 'en' ? `Portrait of ${localizedProfile.name}` : `Foto ${localizedProfile.name}`} width="800" height="800" loading="eager" fetchpriority="high" decoding="async" />
+        ) : (
+          <div class="identity-monogram" aria-hidden="true">
+            <span class="coding-mark">&lt;/&gt;</span>
+            <small>Web · Systems · APIs</small>
+          </div>
+        )}
+      </div>
+      <p><span aria-hidden="true"></span> {copy.locationLine}</p>
+    </div>
+  </div>
+</section>

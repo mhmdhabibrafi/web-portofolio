@@ -1,0 +1,98 @@
+---
+import { navigation, navigationId } from '@/data/navigation';
+import { profile } from '@/data/profile';
+import { socials } from '@/data/socials';
+import ThemeToggle from './ThemeToggle.astro';
+import Icon from './Icon.astro';
+import BrandIcon from './BrandIcon.astro';
+import LanguageSwitcher from './LanguageSwitcher.astro';
+import { ui, type Locale } from '@/i18n/config';
+
+interface Props { locale?: Locale }
+
+const { locale = 'en' } = Astro.props;
+const copy = ui[locale];
+const localizedNavigation = locale === 'en' ? navigation : navigationId;
+
+const pathname = Astro.url.pathname;
+const isActive = (href: string) =>
+  href === '/' ? pathname === '/' : pathname === href || pathname.startsWith(href);
+---
+
+<header class="site-header" data-site-header>
+  <div class="site-container header-inner">
+    <a class="brand" href={locale === 'en' ? '/' : '/id/'}>
+      <span class="brand-mark coding-mark" aria-hidden="true">&lt;/&gt;</span>
+      <span class="brand-name">{profile.name}</span>
+      <span class="sr-only">{copy.navigation.home}</span>
+    </a>
+
+    <nav class="desktop-nav" aria-label={copy.header.primaryNav}>
+      {localizedNavigation.map((item) => (
+        <a class:list={['nav-link', { active: isActive(item.href) }]} href={item.href} aria-current={isActive(item.href) ? 'page' : undefined}>
+          {item.label}
+        </a>
+      ))}
+    </nav>
+
+    <div class="header-actions">
+      <a class="icon-button desktop-social" href={socials.github} target="_blank" rel="noopener noreferrer" aria-label="Muhammad Habib Rafi on GitHub">
+        <BrandIcon name="github" size={19} />
+      </a>
+      <a class="icon-button desktop-social" href={socials.linkedin} target="_blank" rel="noopener noreferrer" aria-label="Muhammad Habib Rafi on LinkedIn">
+        <BrandIcon name="linkedin" size={19} />
+      </a>
+      <a class="icon-button desktop-social" href={socials.instagram} target="_blank" rel="noopener noreferrer" aria-label="Muhammad Habib Rafi on Instagram">
+        <BrandIcon name="instagram" size={19} />
+      </a>
+      <ThemeToggle {locale} />
+      <LanguageSwitcher {locale} />
+      <button class="icon-button menu-button" type="button" data-menu-button data-open-label={copy.header.openMenu} data-close-label={copy.header.closeMenu} aria-expanded="false" aria-controls="mobile-navigation" aria-label={copy.header.openMenu}>
+        <Icon name="menu" size={22} class="menu-open-icon" />
+        <Icon name="close" size={22} class="menu-close-icon" />
+      </button>
+    </div>
+  </div>
+
+  <nav class="mobile-nav" id="mobile-navigation" data-mobile-nav aria-label={copy.header.mobileNav} hidden>
+    <div class="site-container mobile-nav-inner">
+      {localizedNavigation.map((item) => (
+        <a class:list={['mobile-nav-link', { active: isActive(item.href) }]} href={item.href} aria-current={isActive(item.href) ? 'page' : undefined}>
+          {item.label}
+        </a>
+      ))}
+      <div class="mobile-socials">
+        <a href={socials.github} target="_blank" rel="noopener noreferrer"><BrandIcon name="github" size={18} /> GitHub</a>
+        <a href={socials.linkedin} target="_blank" rel="noopener noreferrer"><BrandIcon name="linkedin" size={18} /> LinkedIn</a>
+        <a href={socials.instagram} target="_blank" rel="noopener noreferrer"><BrandIcon name="instagram" size={18} /> Instagram</a>
+        {profile.email && <a href={`mailto:${profile.email}`}><Icon name="mail" size={18} /> Email</a>}
+      </div>
+    </div>
+  </nav>
+</header>
+
+<script>
+  const header = document.querySelector<HTMLElement>('[data-site-header]');
+  const button = header?.querySelector<HTMLButtonElement>('[data-menu-button]');
+  const nav = header?.querySelector<HTMLElement>('[data-mobile-nav]');
+
+  const setOpen = (open: boolean) => {
+    if (!button || !nav) return;
+    button.setAttribute('aria-expanded', String(open));
+    button.setAttribute('aria-label', open ? (button.dataset.closeLabel ?? 'Close navigation menu') : (button.dataset.openLabel ?? 'Open navigation menu'));
+    nav.hidden = !open;
+    header?.classList.toggle('menu-is-open', open);
+  };
+
+  button?.addEventListener('click', () => setOpen(button.getAttribute('aria-expanded') !== 'true'));
+  nav?.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => setOpen(false)));
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && button?.getAttribute('aria-expanded') === 'true') {
+      setOpen(false);
+      button.focus();
+    }
+  });
+  window.addEventListener('resize', () => {
+    if (window.innerWidth >= 900) setOpen(false);
+  });
+</script>
