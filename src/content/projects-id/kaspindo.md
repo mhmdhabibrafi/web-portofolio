@@ -63,7 +63,7 @@ implementation: Sistem ini dibangun sepenuhnya dengan PHP 8.x Native dan PDO MyS
 context: KASPINDO dikembangkan sebagai proyek personal untuk menjawab kebutuhan praktis toko retail dan UMKM Indonesia akan solusi POS yang terjangkau dan berkinerja tinggi yang dapat dijalankan di server lokal maupun VPS cloud.
 contribution: Saya merancang dan mengembangkan seluruh sistem secara mandiri, mencakup desain arsitektur, pemodelan database, logika backend, antarmuka frontend, kontrol akses berbasis peran, dan fitur pelaporan.
 github: https://github.com/mhmdhabibrafi/KASPINDO
-coverImage: /images/projects/kaspindo/cover.svg
+coverImage: /images/projects/kaspindo/cover.png
 seoTitle: KASPINDO | Portofolio Muhammad Habib Rafi
 seoDescription: KASPINDO (Kasir Pintar Indonesia) adalah sistem POS mandiri modern dan berkinerja tinggi untuk retail dan UMKM yang dibangun dengan PHP 8.x Native dan MySQL.
 ---

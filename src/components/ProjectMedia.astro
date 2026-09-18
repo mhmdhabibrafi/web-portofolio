@@ -15,6 +15,9 @@ import rai1366 from '@/assets/rai-dashboard-1366.webp';
 import sadarFinance640 from '@/assets/sadar-finance-dashboard-640.webp';
 import sadarFinance1200 from '@/assets/sadar-finance-dashboard-1200.webp';
 import sadarFinance1366 from '@/assets/sadar-finance-dashboard-1366.webp';
+import kaspindo640 from '@/assets/kaspindo-dashboard-640.webp';
+import kaspindo1024 from '@/assets/kaspindo-dashboard-1024.webp';
+import kaspindo1200 from '@/assets/kaspindo-dashboard-1200.webp';
 
 interface ProjectMediaSet {
   sources: Array<{ image: ImageMetadata; width: number }>;
@@ -75,6 +78,15 @@ const projectMedia: Record<string, ProjectMediaSet> = {
     ],
     width: 1366,
     height: 768,
+  },
+  kaspindo: {
+    sources: [
+      { image: kaspindo640, width: 640 },
+      { image: kaspindo1024, width: 1024 },
+      { image: kaspindo1200, width: 1200 },
+    ],
+    width: 1024,
+    height: 575,
   },
 };
 

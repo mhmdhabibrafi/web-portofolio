@@ -63,7 +63,7 @@ implementation: The system is built entirely with PHP 8.x Native and PDO MySQL f
 context: KASPINDO was developed as a personal project to address the practical needs of Indonesian retail stores and UMKM for an affordable, high-performance POS solution that can run on local servers or cloud VPS.
 contribution: I designed and developed the entire system independently, covering architecture design, database modeling, backend logic, frontend interfaces, role-based access control, and reporting features.
 github: https://github.com/mhmdhabibrafi/KASPINDO
-coverImage: /images/projects/kaspindo/cover.svg
+coverImage: /images/projects/kaspindo/cover.png
 seoTitle: KASPINDO | Muhammad Habib Rafi
 seoDescription: KASPINDO (Kasir Pintar Indonesia) is a modern, high-performance standalone POS system for retail and UMKM built with PHP 8.x Native and MySQL.
 ---
