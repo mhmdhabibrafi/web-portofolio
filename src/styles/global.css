@@ -357,47 +357,119 @@ p {
 .header-actions {
   display: flex;
   align-items: center;
-  gap: 0.35rem;
+  gap: 0.45rem;
+}
+
+.header-actions-divider {
+  width: 1px;
+  height: 1.35rem;
+  background: var(--border);
+  margin: 0 0.15rem;
+  opacity: 0.75;
+}
+
+@media (max-width: 900px) {
+  .header-actions-divider {
+    display: none;
+  }
+}
+
+.theme-toggle,
+.language-switcher {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.35rem;
+  height: 2.35rem;
+  border: 1px solid var(--border);
+  border-radius: 0.65rem;
+  background: var(--surface);
+  color: var(--text-soft);
+  cursor: pointer;
+  transition: border-color 180ms ease, background-color 180ms ease, color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+  user-select: none;
+}
+
+.theme-toggle {
+  width: 2.35rem;
+  padding: 0;
+  flex-shrink: 0;
 }
 
 .language-switcher {
-  display: inline-flex;
-  min-height: 2.4rem;
-  align-items: center;
+  min-width: 3.6rem;
+  padding: 0 0.65rem;
   gap: 0.4rem;
-  padding: 0 0.62rem;
-  border: 1px solid var(--border);
-  border-radius: 0.6rem;
   color: var(--text-soft);
-  font-size: 0.72rem;
-  font-weight: 750;
-  letter-spacing: 0.06em;
-  transition: border-color 180ms ease, background-color 180ms ease, color 180ms ease;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-decoration: none;
 }
 
+.language-switcher .lang-icon {
+  opacity: 0.82;
+  flex-shrink: 0;
+  transition: transform 220ms ease, opacity 220ms ease;
+}
+
+.theme-toggle:hover,
 .language-switcher:hover {
   border-color: var(--accent);
-  background: var(--accent-soft);
+  background: var(--surface-strong);
   color: var(--text);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+}
+
+.theme-toggle:active,
+.language-switcher:active {
+  transform: translateY(0);
+}
+
+.language-switcher:hover .lang-icon {
+  transform: rotate(18deg);
+  opacity: 1;
+}
+
+/* Theme icon specific colors and hover glow */
+.theme-icon-light {
+  color: #f59e0b;
+}
+
+.theme-icon-dark {
+  color: #a5b4fc;
+}
+
+.theme-toggle:hover .theme-icon-light {
+  color: #fbbf24;
+  filter: drop-shadow(0 0 6px rgba(251, 191, 36, 0.45));
+}
+
+.theme-toggle:hover .theme-icon-dark {
+  color: #c7d2fe;
+  filter: drop-shadow(0 0 6px rgba(165, 180, 252, 0.45));
 }
 
 .icon-button {
   display: grid;
-  width: 2.4rem;
-  height: 2.4rem;
+  width: 2.35rem;
+  height: 2.35rem;
   padding: 0;
   place-items: center;
   border: 1px solid transparent;
-  border-radius: 0.6rem;
+  border-radius: 0.65rem;
   background: transparent;
   color: var(--text-soft);
   cursor: pointer;
+  transition: border-color 180ms ease, background-color 180ms ease, color 180ms ease, transform 180ms ease;
 }
 
 .icon-button:hover {
   border-color: var(--border);
   background: var(--surface);
   color: var(--text);
+  transform: translateY(-1px);
 }
 
 .theme-icon,
@@ -405,9 +477,9 @@ p {
   display: none;
 }
 
-html[data-theme-mode="system"] .theme-icon-system,
-html[data-theme-mode="light"] .theme-icon-light,
-html[data-theme-mode="dark"] .theme-icon-dark,
+html[data-theme="light"] .theme-icon-light,
+html[data-theme="dark"] .theme-icon-dark,
+html:not([data-theme="light"]) .theme-icon-dark,
 .menu-is-open .menu-close-icon {
   display: block;
 }
@@ -2016,9 +2088,9 @@ a.contact-card:hover {
   display: none;
 }
 
-html[data-theme-mode="system"] .theme-toggle .theme-icon-system,
-html[data-theme-mode="light"] .theme-toggle .theme-icon-light,
-html[data-theme-mode="dark"] .theme-toggle .theme-icon-dark,
+html[data-theme="light"] .theme-toggle .theme-icon-light,
+html[data-theme="dark"] .theme-toggle .theme-icon-dark,
+html:not([data-theme="light"]) .theme-toggle .theme-icon-dark,
 .menu-is-open .menu-button .menu-close-icon {
   display: inline-block;
 }
@@ -2830,17 +2902,9 @@ body::before {
 }
 
 .icon-button:hover,
+.theme-toggle:hover,
 .language-switcher:hover {
-  transform: none;
   background: var(--surface-strong);
-}
-
-.language-switcher {
-  min-height: 2.3rem;
-  margin-left: 0.15rem;
-  padding-inline: 0.55rem;
-  border-color: var(--border);
-  border-radius: 0.6rem;
 }
 
 .desktop-social .brand-icon-linkedin {

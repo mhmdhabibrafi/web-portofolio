@@ -4,63 +4,54 @@ import Icon from './Icon.astro';
 
 interface Props { locale?: Locale }
 const { locale = 'en' } = Astro.props;
-const initialLabel = locale === 'en' ? 'Theme: System. Activate to use light theme' : 'Tema: Sistem. Aktifkan untuk memakai tema terang';
+const isId = locale === 'id';
+const initialLabel = isId ? 'Ubah ke mode terang' : 'Switch to light mode';
 ---
 
-<button class="icon-button theme-toggle" type="button" data-theme-toggle data-locale={locale} aria-label={initialLabel} title={locale === 'en' ? 'Change color theme' : 'Ubah tema warna'}>
-  <Icon name="monitor" size={20} class="theme-icon theme-icon-system" />
-  <Icon name="light_mode" size={20} class="theme-icon theme-icon-light" />
-  <Icon name="dark_mode" size={20} class="theme-icon theme-icon-dark" />
-  <span class="sr-only" data-theme-label>{locale === 'en' ? 'System theme' : 'Tema sistem'}</span>
+<button
+  class="theme-toggle"
+  type="button"
+  data-theme-toggle
+  data-locale={locale}
+  aria-label={initialLabel}
+  title={initialLabel}
+>
+  <Icon name="dark_mode" size={19} class="theme-icon theme-icon-dark" />
+  <Icon name="light_mode" size={19} class="theme-icon theme-icon-light" />
+  <span class="sr-only" data-theme-label>{isId ? 'Mode gelap' : 'Dark mode'}</span>
 </button>
 
 <script>
-  const choices = ['system', 'light', 'dark'] as const;
-  type ThemeChoice = (typeof choices)[number];
+  const applyTheme = (theme: 'dark' | 'light') => {
+    document.documentElement.dataset.theme = theme;
+    localStorage.setItem('theme', theme);
 
-  const resolveTheme = (choice: ThemeChoice) =>
-    choice === 'system'
-      ? window.matchMedia('(prefers-color-scheme: dark)').matches
-        ? 'dark'
-        : 'light'
-      : choice;
-
-  const applyTheme = (choice: ThemeChoice) => {
-    document.documentElement.dataset.themeMode = choice;
-    document.documentElement.dataset.theme = resolveTheme(choice);
     document.querySelectorAll<HTMLButtonElement>('[data-theme-toggle]').forEach((button) => {
-      const nextChoice = choices[(choices.indexOf(choice) + 1) % choices.length] ?? 'system';
-      const isIndonesian = button.dataset.locale === 'id';
-      const names = isIndonesian
-        ? { system: 'sistem', light: 'terang', dark: 'gelap' }
-        : { system: 'system', light: 'light', dark: 'dark' };
-      button.dataset.mode = choice;
-      button.setAttribute(
-        'aria-label',
-        isIndonesian
-          ? `Tema: ${names[choice]}. Aktifkan untuk memakai tema ${names[nextChoice]}`
-          : `Theme: ${names[choice]}. Activate to use ${names[nextChoice]} theme`,
-      );
-      const label = button.querySelector<HTMLElement>('[data-theme-label]');
-      if (label) label.textContent = isIndonesian ? `Tema ${names[choice]}` : `${names[choice][0]?.toUpperCase()}${names[choice].slice(1)} theme`;
+      const isId = button.dataset.locale === 'id';
+      const isDark = theme === 'dark';
+      const label = isDark
+        ? (isId ? 'Ubah ke mode terang' : 'Switch to light mode')
+        : (isId ? 'Ubah ke mode gelap' : 'Switch to dark mode');
+      button.setAttribute('aria-label', label);
+      button.setAttribute('title', label);
+      const srLabel = button.querySelector<HTMLElement>('[data-theme-label]');
+      if (srLabel) {
+        srLabel.textContent = isDark
+          ? (isId ? 'Mode gelap aktif' : 'Dark mode active')
+          : (isId ? 'Mode terang aktif' : 'Light mode active');
+      }
     });
   };
 
   const stored = localStorage.getItem('theme');
-  const initialChoice: ThemeChoice = stored === 'light' || stored === 'dark' ? stored : 'system';
-  applyTheme(initialChoice);
+  const initialTheme = stored === 'light' ? 'light' : 'dark';
+  applyTheme(initialTheme);
 
   document.querySelectorAll<HTMLButtonElement>('[data-theme-toggle]').forEach((button) => {
     button.addEventListener('click', () => {
-      const current = (document.documentElement.dataset.themeMode ?? 'system') as ThemeChoice;
-      const next = choices[(choices.indexOf(current) + 1) % choices.length] ?? 'system';
-      if (next === 'system') localStorage.removeItem('theme');
-      else localStorage.setItem('theme', next);
+      const current = document.documentElement.dataset.theme === 'light' ? 'light' : 'dark';
+      const next = current === 'dark' ? 'light' : 'dark';
       applyTheme(next);
     });
-  });
-
-  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
-    if (!localStorage.getItem('theme')) applyTheme('system');
   });
 </script>

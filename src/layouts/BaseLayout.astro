@@ -23,7 +23,7 @@ const xDefaultUrl = noindex ? undefined : new URL(localizedPath(Astro.url.pathna
 ---
 
 <!doctype html>
-<html lang={localeMeta[locale].lang} data-theme-mode="system">
+<html lang={localeMeta[locale].lang} data-theme="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -41,14 +41,10 @@ const xDefaultUrl = noindex ? undefined : new URL(localizedPath(Astro.url.pathna
       (() => {
         try {
           const saved = localStorage.getItem('theme');
-          const mode = saved === 'light' || saved === 'dark' ? saved : 'system';
-          const resolved = mode === 'system'
-            ? (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
-            : mode;
-          document.documentElement.dataset.themeMode = mode;
-          document.documentElement.dataset.theme = resolved;
+          const theme = saved === 'light' ? 'light' : 'dark';
+          document.documentElement.dataset.theme = theme;
         } catch {
-          document.documentElement.dataset.themeMode = 'system';
+          document.documentElement.dataset.theme = 'dark';
         }
       })();
     </script>

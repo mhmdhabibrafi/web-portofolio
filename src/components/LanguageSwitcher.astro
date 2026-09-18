@@ -1,6 +1,5 @@
 ---
 import { alternateLocale, localizedPath, localeMeta, type Locale } from '@/i18n/config';
-import Icon from './Icon.astro';
 
 interface Props {
   locale: Locale;
@@ -13,6 +12,10 @@ const label = locale === 'en' ? 'Beralih ke Bahasa Indonesia' : 'Switch to Engli
 ---
 
 <a class="language-switcher" href={href} hreflang={targetLocale} lang={targetLocale} aria-label={label} title={label}>
-  <Icon name="language" size={18} />
+  <svg class="lang-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+    <circle cx="12" cy="12" r="10"></circle>
+    <line x1="2" y1="12" x2="22" y2="12"></line>
+    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+  </svg>
   <span>{localeMeta[targetLocale].label}</span>
 </a>
