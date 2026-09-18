@@ -18,7 +18,7 @@ export const profile: Profile = {
   name: 'Muhammad Habib Rafi',
   shortName: '</>',
   title: 'Full Stack Web Developer',
-  positions: ['Information Systems Student', 'Full Stack Web Developer', 'Tech Writer'],
+  positions: ['Full Stack Web Developer', 'Information Systems Student'],
   location: 'Pekanbaru, Riau, Indonesia',
   city: 'Pekanbaru',
   region: 'Riau',
@@ -27,13 +27,13 @@ export const profile: Profile = {
   major: 'Information Systems',
   domain: 'https://mhmdhabibrafi.me',
   summary:
-    'I build web applications, backend services, APIs, and operational systems with a focus on reliability, usability, and maintainable implementation.',
+    'I am a Full Stack Web Developer and Information Systems student building reliable web applications, backend services, APIs, and databases with a focus on clean architecture and practical usability.',
   email: 'mhmdhabibrafi@gmail.com',
 };
 
 export const profileId: Profile = {
   ...profile,
-  positions: ['Mahasiswa Sistem Informasi', 'Full Stack Web Developer', 'Penulis Teknologi'],
+  positions: ['Full Stack Web Developer', 'Mahasiswa Sistem Informasi'],
   summary:
-    'Saya membangun aplikasi web, layanan backend, API, dan sistem operasional dengan fokus pada keandalan, kemudahan penggunaan, dan implementasi yang mudah dipelihara.',
+    'Saya adalah seorang Full Stack Web Developer dan mahasiswa Sistem Informasi yang membangun aplikasi web, layanan backend, API, dan basis data dengan fokus pada keandalan dan implementasi yang rapi.',
 };
