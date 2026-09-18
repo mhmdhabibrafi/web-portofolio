@@ -5,7 +5,7 @@ import BrandIcon from '@/components/BrandIcon.astro';
 import { profileId } from '@/data/profile';
 import { socials } from '@/data/socials';
 
-const schema = { '@context': 'https://schema.org', '@type': 'ContactPage', name: `Kontak ${profileId.name}`, url: `${profileId.domain}/id/contact/`, inLanguage: 'id', mainEntity: { '@type': 'Person', name: profileId.name, url: profileId.domain, email: profileId.email, sameAs: [socials.linkedin, socials.github, socials.instagram, socials.orcid] } };
+const schema = { '@context': 'https://schema.org', '@type': 'ContactPage', name: `Kontak ${profileId.name}`, url: `${profileId.domain}/id/contact/`, inLanguage: 'id', mainEntity: { '@type': 'Person', name: profileId.name, url: profileId.domain, email: profileId.email, sameAs: [socials.linkedin, socials.github, socials.instagram, socials.orcid, socials.scholar] } };
 ---
 
 <BaseLayout locale="id" title="Kontak | Muhammad Habib Rafi" description="Hubungi Muhammad Habib Rafi, Full Stack Web Developer di Pekanbaru, melalui email, LinkedIn, GitHub, atau Instagram." image="/og/id-contact.png" structuredData={schema}>
