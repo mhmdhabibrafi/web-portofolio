@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">KASPINDO project graphic</title><desc id="desc">Abstract POS terminal identity for KASPINDO.</desc>
+  <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#0c1a12"/><stop offset="1" stop-color="#091410"/></linearGradient></defs>
+  <rect width="1600" height="900" fill="url(#g)"/>
+  <circle cx="1350" cy="120" r="320" fill="#087f5b" opacity=".08"/>
+  <circle cx="200" cy="750" r="240" fill="#2563eb" opacity=".06"/>
+  <!-- POS Terminal frame -->
+  <g fill="none" stroke="#1e5c42"><rect x="150" y="130" width="1300" height="640" rx="38"/><path d="M150 250h1300"/><circle cx="210" cy="190" r="9" fill="#087f5b" stroke="none"/><circle cx="245" cy="190" r="9" fill="#40c9a2" stroke="none" opacity=".7"/><circle cx="280" cy="190" r="9" fill="#2563eb" stroke="none" opacity=".5"/></g>
+  <!-- Product grid -->
+  <g transform="translate(180 280)" fill="none" stroke="#1e5c42" stroke-width="1.5">
+    <rect x="0" y="0" width="180" height="130" rx="14" fill="#122a1e" opacity=".6"/><rect x="200" y="0" width="180" height="130" rx="14" fill="#122a1e" opacity=".6"/><rect x="400" y="0" width="180" height="130" rx="14" fill="#122a1e" opacity=".6"/>
+    <rect x="0" y="150" width="180" height="130" rx="14" fill="#122a1e" opacity=".6"/><rect x="200" y="150" width="180" height="130" rx="14" fill="#122a1e" opacity=".6"/><rect x="400" y="150" width="180" height="130" rx="14" fill="#122a1e" opacity=".6"/>
+  </g>
+  <!-- Cart summary panel -->
+  <g transform="translate(820 280)"><rect width="580" height="330" rx="18" fill="#0f2318" stroke="#1e5c42"/><text x="30" y="50" fill="#40c9a2" font-family="Inter,Arial,sans-serif" font-size="18" font-weight="700" letter-spacing="3">KERANJANG</text>
+    <line x1="30" y1="75" x2="550" y2="75" stroke="#1e5c42" stroke-width="1.5"/>
+    <text x="30" y="115" fill="#8fb5a0" font-family="Arial,sans-serif" font-size="17">Item 1</text><text x="480" y="115" fill="#c6e8d5" font-family="Arial,sans-serif" font-size="17" text-anchor="end">Rp 25.000</text>
+    <text x="30" y="155" fill="#8fb5a0" font-family="Arial,sans-serif" font-size="17">Item 2</text><text x="480" y="155" fill="#c6e8d5" font-family="Arial,sans-serif" font-size="17" text-anchor="end">Rp 15.000</text>
+    <text x="30" y="195" fill="#8fb5a0" font-family="Arial,sans-serif" font-size="17">Item 3</text><text x="480" y="195" fill="#c6e8d5" font-family="Arial,sans-serif" font-size="17" text-anchor="end">Rp 32.000</text>
+    <line x1="30" y1="240" x2="550" y2="240" stroke="#1e5c42" stroke-width="1.5"/>
+    <text x="30" y="280" fill="#e8f5ef" font-family="Arial,sans-serif" font-size="24" font-weight="700">TOTAL</text><text x="480" y="280" fill="#40c9a2" font-family="Arial,sans-serif" font-size="24" font-weight="700" text-anchor="end">Rp 72.000</text>
+    <rect x="30" y="295" width="520" height="0" rx="3" fill="#087f5b" opacity=".4"/>
+  </g>
+  <!-- Title -->
+  <g transform="translate(220 700)"><text fill="#40c9a2" font-family="Inter,Arial,sans-serif" font-size="22" font-weight="700" letter-spacing="5">PERSONAL PROJECT</text><text y="65" fill="#e8f5ef" font-family="Arial,sans-serif" font-size="72" font-weight="700">KASPINDO</text><path d="M0 90h220" stroke="#40c9a2" stroke-width="4"/></g>
+  <!-- POS icon -->
+  <g transform="translate(1200 680)" fill="none" stroke="#087f5b" stroke-width="8" stroke-linecap="round"><rect x="0" y="0" width="120" height="85" rx="14" fill="#122a1e"/><line x1="20" y1="25" x2="60" y2="25"/><line x1="20" y1="45" x2="100" y2="45"/><line x1="20" y1="65" x2="80" y2="65"/><rect x="30" y="95" width="60" height="15" rx="5" fill="#1e5c42"/></g>
+</svg>
