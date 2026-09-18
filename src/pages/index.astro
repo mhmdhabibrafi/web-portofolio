@@ -48,8 +48,43 @@ const personSchema = {
   affiliation: {
     '@type': 'EducationalOrganization',
     name: profile.university,
+    alternateName: 'UIN Suska Riau',
+    url: 'https://uin-suska.ac.id',
   },
-  knowsAbout: ['Web Development', 'Backend Development', 'REST APIs', 'Laravel', 'React', 'Node.js', 'PostgreSQL', 'MySQL', 'Docker'],
+  alumniOf: {
+    '@type': 'CollegeOrUniversity',
+    name: profile.university,
+    alternateName: 'UIN Suska Riau',
+    url: 'https://uin-suska.ac.id',
+  },
+  hasOccupation: {
+    '@type': 'Occupation',
+    name: profile.title,
+  },
+  author: publications.map((pub) => ({
+    '@type': 'ScholarlyArticle',
+    name: pub.title,
+    headline: pub.title,
+    url: pub.url,
+    sameAs: `https://doi.org/${pub.doi}`,
+    isPartOf: {
+      '@type': 'Periodical',
+      name: pub.journal,
+    },
+  })),
+  knowsAbout: [
+    'Web Development',
+    'Full Stack Development',
+    'Backend Development',
+    'REST APIs',
+    'Laravel',
+    'React',
+    'Node.js',
+    'PostgreSQL',
+    'MySQL',
+    'Docker',
+    'Information Systems',
+  ],
 };
 
 const websiteSchema = {
