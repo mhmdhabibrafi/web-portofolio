@@ -14,6 +14,7 @@ const pages = [
   { file: 'ascit.png', eyebrow: 'INTERNSHIP PROJECT', title: 'ASCIT', subtitle: 'Asset Care Information Technology' },
   { file: 'rai.png', eyebrow: 'SOFTWARE PROJECT', title: 'RAI', subtitle: 'Resilience Artificial Intelligence' },
   { file: 'rentak.png', eyebrow: 'INFORMATION SYSTEM', title: 'RENTAK', subtitle: 'Muhammad Habib Rafi · Full Stack Web Developer' },
+  { file: 'kaspindo.png', eyebrow: 'STANDALONE POS', title: 'KASPINDO', subtitle: 'Kasir Pintar Indonesia · Muhammad Habib Rafi' },
   { file: 'id-default.png', eyebrow: 'FULL STACK WEB DEVELOPER', title: 'Muhammad Habib Rafi', subtitle: 'Aplikasi web · Layanan backend · API' },
   { file: 'id-about.png', eyebrow: 'TENTANG', title: 'Membangun di seluruh stack', subtitle: 'Muhammad Habib Rafi · Full Stack Web Developer' },
   { file: 'id-projects.png', eyebrow: 'PROYEK', title: 'Perangkat lunak untuk alur nyata', subtitle: 'Muhammad Habib Rafi · Full Stack Web Developer' },
@@ -24,6 +25,7 @@ const pages = [
   { file: 'id-ascit.png', eyebrow: 'PROYEK MAGANG', title: 'ASCIT', subtitle: 'Asset Care Information Technology' },
   { file: 'id-rai.png', eyebrow: 'PROYEK PERANGKAT LUNAK', title: 'RAI', subtitle: 'Resilience Artificial Intelligence' },
   { file: 'id-rentak.png', eyebrow: 'SISTEM INFORMASI', title: 'RENTAK', subtitle: 'Muhammad Habib Rafi · Full Stack Web Developer' },
+  { file: 'id-kaspindo.png', eyebrow: 'SISTEM POS MANDIRI', title: 'KASPINDO', subtitle: 'Kasir Pintar Indonesia · Muhammad Habib Rafi' },
 ];
 
 const escapeXml = (value) => value.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&apos;');
